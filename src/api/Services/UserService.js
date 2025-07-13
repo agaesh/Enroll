@@ -1,12 +1,8 @@
 const bcrypt = require("bcrypt");
-const { isCancel } = require("axios");
 const path = require('path');
 const base = path.resolve(__dirname, '../../../');
 const sequelize = require(path.join(base, 'src', 'config', 'db.js'));
 const { DataTypes } = require('sequelize');
-const { throws } = require("assert");
-const { error } = require("console");
-const user = require("../Models/user");
 const User = require('../Models/user')(sequelize, DataTypes);
 
 exports.registerUser = async (body) => {
