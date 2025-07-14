@@ -4,7 +4,8 @@
   "description": "Student Management System",
   "main": "index.js",
  "scripts": {
-  "start": "node src/api/index.js"
+  "start": "node ./src/config/index.js",
+  "dev": "nodemon ./src/config/index.js"
 },
   "author": "",
   "license": "ISC",
