@@ -3,13 +3,14 @@
   "version": "1.0.0",
   "description": "Student Management System",
   "main": "index.js",
- "scripts": {
-  "start": "node ./src/config/index.js",
-  "dev": "nodemon ./src/config/index.js"
-},
+  "scripts": {
+    "start": "node ./src/config/index.js",
+    "dev": "nodemon ./src/config/index.js"
+  },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@faker-js/faker": "^9.9.0",
     "bcrypt": "^6.0.0",
     "dotenv": "^17.2.0",
     "express": "^5.1.0",
