@@ -16,7 +16,7 @@ module.exports = {
     */
 
 const users = [];
-const roles = ['student', 'lecturer'];
+const roles = ['student', 'instructor','admin'];
 const status = [true,false];
 for (let i = 0; i < 10; i++) {
   users.push({
