@@ -13,7 +13,7 @@ const Input = ({ label, placeholder, type = "text", value, onChange, name }) => 
         value={value}
         onChange={onChange}
         name={name}
-      />
+      /> 
     </div>
   );
 };
