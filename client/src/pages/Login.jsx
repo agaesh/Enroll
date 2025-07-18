@@ -30,7 +30,22 @@ const Login = () => {
           onChange={(e) => setPassword(e.target.value)}
           name="password"
         />
-    </>
+        
+        <div style={{ marginBottom: '20px', textAlign: 'right' }}>
+          <Link to="/forgot-password" style={{ fontSize: '13px' }}>
+            Forgot Password?
+          </Link>
+        </div>
+
+        <Button
+          sx={{ width: '100%', padding: '10px' }}
+          variant="contained"
+          onClick={() => console.log('Clicked')}
+        >
+          Log In
+        </Button>
+      </form>
+    </div>
   );
 };
 
