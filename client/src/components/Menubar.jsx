@@ -6,12 +6,14 @@ import './Menubar.css'; // optional styling file
 const Menubar = () => {
   return (
     <nav className="menubar">
+      <h2>EnrollNow</h2>
       <ul>
         <li><Link to="/">Home</Link></li>
-        <li><Link to="/students">Students</Link></li>
-        <li><Link to="/courses">Courses</Link></li>
-        <li><Link to="/enroll">Enroll</Link></li>
-        <li><Link to="/logout">Logout</Link></li>
+        <li><Link to="/students">Courses</Link></li>
+        <li><Link to="/courses">Admissions</Link></li>
+        <li><Link to="/enroll">About Us</Link></li>
+        <li><Link to="/logout">Login</Link></li>
+        <li><Link to="/logout">Register</Link></li>
       </ul>
     </nav>
   );
