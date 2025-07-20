@@ -6,7 +6,7 @@ import './Menubar.css'; // optional styling file
 const Menubar = () => {
   return (
     <nav className="menubar">
-      <h2>EnrollNow</h2>
+      <h2>Enroll<span>Now</span></h2>
       <ul>
         <li><Link to="/">Home</Link></li>
         <li><Link to="/students">Courses</Link></li>
