@@ -3,10 +3,12 @@ const userService = require('../Services/UserService');
 exports.registerUser = async (req, res) => {
   try {
     const newUser = await userService.registerUser(req.body);
-    res.status(201).json({
-      message: 'User registered successfully!',
-      userId: newUser.id
-    });
+    if(newUser){
+      res.status(201).json({
+          message: 'User registered successfully!',
+          userId: newUser.id
+      });
+    }
   } catch (error) {
     res.status(error.status || 500).json({ error: error.message || 'Internal Server Error' });
   }
@@ -32,13 +34,5 @@ exports.LoginUser = async(req,res)=>{
     }
   }catch(error){
     res.status(error.status || 500).json({ error: error.message || 'Internal Server Error' });
-  }
-}
-
-exports.ChangePassword = async(req,res) =>{
-  try{
-    const ChangePassword = await userService.ChangePassword(req.body);
-  }catch(error){
-      res.status(error.status || 500).json({ error: error.message || 'Internal Server Error' });
   }
 }
