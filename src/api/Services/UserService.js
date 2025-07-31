@@ -41,7 +41,7 @@ exports.LoginUser = async(body)=>{
       throw error
     }
     if(!validatePassword){
-      const error = new Error('Account Not Exist')
+      const error = new Error('User Account does not exist. Please Register your account' ) 
       error.status = 400;
       throw error
     }
@@ -57,7 +57,7 @@ exports.LoginUser = async(body)=>{
     };
    
   }catch(error){
-    console.error("this error is =" + error)
+    throw error;
   }
 }
 
