@@ -11,7 +11,7 @@ exports.registerUser = async (body) => {
     // Handle user registration
     const username = body.username;
     const email = body.email;
-    const password = body.password;
+    let password = body.password;
 
     // Call DB or validation logic
     const existingUser = await User.findOne({ where: { email } });
@@ -20,6 +20,8 @@ exports.registerUser = async (body) => {
       error.status = 409;
       throw error;
     }
+    const hashedPassword = await bcrypt.hash(password, 10)
+    password = hashedPassword
     const newUser = await User.create({ username, email, password });
     return newUser; // controller will format and send response
   } catch (error) {
@@ -30,9 +32,12 @@ exports.registerUser = async (body) => {
 exports.LoginUser = async(body)=>{
   try{
 
-    const email = body.email;
+    const email = body. email;
     const password = body.password;
-    const findUser = await User.findOne({email})
+    const findUser = await User.findOne({
+    where: { email }
+    });
+
     const validatePassword = await bcrypt.compare(password, findUser.password)
 
     if(!findUser){
