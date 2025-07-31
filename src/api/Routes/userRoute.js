@@ -10,4 +10,8 @@ router.post('/register', async (req, res) => {
     await userController.registerUser(req, res);
 });
 
+router.post('/login', async(req,res)=>{
+  await userController.LoginUser(req,res);
+})
+
 module.exports = router;
