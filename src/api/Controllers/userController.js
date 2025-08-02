@@ -19,7 +19,7 @@ exports.LoginUser = async(req,res)=>{
       
     const isLogin  = await userService.LoginUser(req.body)
 
-    res.cookie('token', token, {
+    res.cookie('token', isLogin.token, {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
       sameSite: 'strict',
@@ -29,7 +29,6 @@ exports.LoginUser = async(req,res)=>{
     if(isLogin) {
       return res.status(200).json({
         message: 'Login successful',
-        token
       });
     }
   }catch(error){
