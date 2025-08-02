@@ -20,10 +20,12 @@ exports.registerUser = async (body) => {
       error.status = 409;
       throw error;
     }
+
     const hashedPassword = await bcrypt.hash(password, 10)
     password = hashedPassword
     const newUser = await User.create({ username, email, password });
     return newUser; // controller will format and send response
+    
   } catch (error) {
     throw error;
   }
