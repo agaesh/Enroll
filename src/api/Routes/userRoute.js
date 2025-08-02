@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const userController = require('../Controllers/userController');
+const { json } = require('sequelize');
 
 // POST /api/users/register
 router.get("/", (req, res) => {
@@ -23,4 +24,11 @@ router.post('/logout', async (req, res) => {
   res.status(200).json({ message: 'Logged out successfully' });
 });
 
+router.get("/testProtectRoutes", (req, res) => {
+  console.log("Token from cookie:", req.cookies.token); // ✅ This prints to your terminal
+  res.status(200).json({ 
+    message: "Protected route accessed", 
+    token: req.cookies.token 
+  });
+});
 module.exports = router;
