@@ -5,6 +5,7 @@ const port = 3000;
 const cookieparser = require('cookie-parser');
 app.use(express.json());
 app.use(cookieparser());
+require('dotenv').config();
 
 const UserRegister = require("../api/Services/UserService");
 // Require the router
