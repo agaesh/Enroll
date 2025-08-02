@@ -1,0 +1,94 @@
+/* src/components/Menubar.css */
+
+nav {
+  display: flex;
+  flex-direction: column;
+}
+
+nav h2 {
+  color: rgb(0, 0, 0);
+}
+
+h2 span {
+  color: #2090DF;
+}
+
+.menubar {
+  background-color: #f9fcff;
+  padding: 10px 20px;
+}
+
+.menubar ul {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0;
+  margin: 0;
+  padding: 0;
+}
+
+.menubar li {
+  padding-right: 30px;
+  margin-left: 20px;
+  border-right: 1px solid black;
+}
+
+.menubar li:first-child {
+  border-left: none;
+  padding-left: 0;
+  margin-left: 0;
+}
+
+.menubar li a {
+  color: black;
+  text-decoration: none;
+  font-weight: bolder;
+  font-size: 14px;
+}
+
+.menubar li a:hover {
+  text-decoration: underline;
+}
+
+/* Mobile devices (phones) */
+@media screen and (max-width: 768px) {
+  .menubar ul {
+    flex-direction: column;
+  }
+
+  .menubar ul li {
+    height: 30px;
+    padding-left: 0px;
+    padding-right: 15px;
+    border-left: 1px solid white;
+    border-right: none;
+    margin-left: 0;
+    text-align: center;
+    text-anchor: start;
+  }
+
+  .menubar ul li a {
+    font-size: 17px;
+    padding: 0;
+  }
+}
+
+/* Laptops and medium screens (e.g., 1024px - 1440px) */
+@media screen and (min-width: 769px) and (max-width: 1440px) {
+  .menubar {
+    padding: 15px 40px;
+  }
+
+  .menubar li {
+    padding-right: 40px;
+    margin-left: 30px;
+  }
+
+  .menubar li a {
+    font-size: 16px;
+  }
+
+  nav h2 {
+    font-size: 22px;
+  }
+}
