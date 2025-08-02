@@ -13,7 +13,7 @@ const Menubar = () => {
         <li><Link to="/courses">Admissions</Link></li>
         <li><Link to="/enroll">About Us</Link></li>
         <li><Link to="/logout">Login</Link></li>
-        <li><Link to="/logout">Register</Link></li>
+        <li><Link to="/register">Register</Link></li>
       </ul>
     </nav>
   );
