@@ -5,6 +5,7 @@ module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.bulkInsert('Instructors', [
       {
+        id:1,
         first_name: 'Agaesh',
         last_name: 'Kumar',
         email: 'agaesh.kumar@example.com',
@@ -14,6 +15,7 @@ module.exports = {
         is_active: true
       },
       {
+        id:2,
         first_name: 'Nisha',
         last_name: 'Ravi',
         email: 'nisha.ravi@example.com',
@@ -23,6 +25,7 @@ module.exports = {
         is_active: true
       },
       {
+        id:3,
         first_name: 'Arun',
         last_name: 'Raj',
         email: 'arun.raj@example.com',
