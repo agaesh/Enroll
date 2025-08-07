@@ -4,7 +4,11 @@ const { Model } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class Department extends Model {
     static associate(models) {
-      // Associate with Instructor
+      // 2. One department optionally has one department head (an instructor)
+      Department.belongsTo(models.Instructor, {
+        foreignKey: 'head_id',
+        as: 'head' // This lets you do department.getHead()
+      });
     }
   }
 
