@@ -1,9 +1,11 @@
 'use strict';
+const department = require("../../api/Models/department");
 
 module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.bulkInsert('Departments', [
       {
+        department_id:1,
         department_name: 'Computer Science',
         department_code: 'CS101',
         head_id: null,
@@ -12,6 +14,7 @@ module.exports = {
         building: 'Block A',
       },
       {
+        department_id:2,
         department_name: 'Electrical Engineering',
         department_code: 'EE202',
         head_id: null,
@@ -20,6 +23,7 @@ module.exports = {
         building: 'Block B',
       },
       {
+        department_id:3,
         department_name: 'Mechanical Engineering',
         department_code: 'ME303',
         head_id: null,
