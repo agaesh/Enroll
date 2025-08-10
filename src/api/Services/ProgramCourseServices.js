@@ -1,4 +1,7 @@
-const { ProgramCourse } = require("../models"); // ✅ Import from models index
+const { DataTypes } = require("sequelize");
+
+const ProgramCourse = require('../Models/Student')(sequelize, DataTypes);
+
 
 exports.createProgram = async (programData) => {
   try {
@@ -32,3 +35,18 @@ exports.createProgram = async (programData) => {
     throw error;
   }
 };
+
+exports.DeleteProgram = async (id) => {
+    const findProgram = await ProgramCourse.findOne({ where: { id } });
+
+    if (!findProgram) {
+        const error = new Error("Course cannot be found");
+        error.status = 404;
+        throw error;
+    }
+
+    await findProgram.destroy();
+
+    return { message: "Program deleted successfully" };
+};
+
