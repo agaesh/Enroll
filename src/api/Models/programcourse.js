@@ -11,6 +11,22 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+
+      ProgramCourse.belongsTo(models.ProgramCourse, {
+      as: 'parent',
+      foreignKey: 'parent_id'
+      });
+
+      ProgramCourse.hasMany(models.ProgramCourse, {
+      as: 'children',
+      foreignKey: 'parent_id'
+      });
+
+      // Department association
+      ProgramCourse.belongsTo(models.Department, {
+        foreignKey: 'department_id',
+        as: 'department'
+      });
     }
   }
   ProgramCourse.init({
