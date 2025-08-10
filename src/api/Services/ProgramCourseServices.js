@@ -1,8 +1,8 @@
-const { DataTypes } = require("sequelize");
-
-const ProgramCourse = require('../Models/Student')(sequelize, DataTypes);
-
-
+const path = require('path');
+const base = path.resolve(__dirname, '../../../');
+const sequelize = require(path.join(base, 'src', 'config', 'db.js'));
+const { DataTypes } = require('sequelize');
+const ProgramCourse = require('../Models/programcourse')(sequelize, DataTypes)
 exports.createProgram = async (programData) => {
   try {
     // Check if program with same code already exists
