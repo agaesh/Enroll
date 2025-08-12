@@ -57,7 +57,24 @@ exports.getAllPrograms = async (req, res) => {
     });
   }
 };
+exports.UpdateProgram = async (req, res) => {
+  try {
+    const result = await ProgramService.UpdateProgram(req.body);
 
+    if(result){
+      res.status(200).json({
+          message: "Update successful",
+          data: result // optional: send back updated data
+        });
+    }
+  
+  } catch (error) {
+    res.status(500).json({
+      message: "Update failed",
+      error: error.message
+    });
+  }
+};
 exports.DeleteProgram = async(id)=>{
    return await ProgramService.DeleteProgram(id)
 }
