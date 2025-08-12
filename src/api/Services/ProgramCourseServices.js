@@ -50,3 +50,25 @@ exports.DeleteProgram = async (id) => {
     return { message: "Program deleted successfully" };
 };
 
+exports.UpdateProgram = async (programData) => {
+  try {
+    const { id, ...updateFields } = programData;
+
+    if (!id) {
+      throw new Error("Program ID is required to update");
+    }
+
+    const [rowsUpdated] = await ProgramCourse.update(updateFields, {
+      where: { id }
+    });
+
+    if (rowsUpdated === 0) {
+      return { success: false, message: "No program found with the given ID" };
+    }
+
+    return { success: true, message: "Program updated successfully" };
+  } catch (error) {
+    return { success: false, message: error.message };
+  }
+};
+
