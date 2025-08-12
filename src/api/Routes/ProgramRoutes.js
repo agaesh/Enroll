@@ -16,6 +16,10 @@ router.post('/add', async (req, res) => {
   await programController.createProgram(req, res);
 });
 
+router.put('/update', async (req, res) => {
+  await programController.UpdateProgram(req,res)
+});
+
 // DELETE /delete/:id
 router.delete("/delete", async (req, res) => {
     try {
