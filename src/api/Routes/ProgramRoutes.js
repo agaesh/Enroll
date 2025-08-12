@@ -12,7 +12,7 @@ router.get("/listing", async(req,res)=>{
     await programController.getAllPrograms(req,res);
 })
 // POST /api/programs (create program)
-router.post('/add', async (req, res) => {
+router.post('/create', async (req, res) => {
   await programController.createProgram(req, res);
 });
 
