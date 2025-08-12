@@ -11,15 +11,6 @@ router.get('/', (req, res) => {
 router.get("/listing", async(req,res)=>{
     await programController.getAllPrograms(req,res);
 })
-
-router.get("/listing/top/:top", async (req, res) => {
-    await programController.getAllPrograms(req, res);
-});
-
-router.get("/listing/page/:page/limit/:limit", async (req, res) => {
-    await programController.getAllPrograms(req, res);
-});
-
 // POST /api/programs (create program)
 router.post('/add', async (req, res) => {
   await programController.createProgram(req, res);
