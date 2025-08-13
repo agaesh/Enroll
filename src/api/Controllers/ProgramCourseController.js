@@ -7,11 +7,11 @@ const ProgramCourse = require('../Models/programcourse')(sequelize, DataTypes)
 
 exports.createProgram = async (req, res) => {
   try {
-    const newUser = await ProgramService.createProgram(req.body);
-    if(newUser){
+    const addProgram = await ProgramService.createProgram(req.body);
+    if(addProgram){
       res.status(201).json({
-          message: 'User registered successfully!',
-          userId: newUser.id
+          message: 'Program Added Successfully',
+          userId: addProgram.id
       });
     }
   } catch (error) {
@@ -61,20 +61,27 @@ exports.UpdateProgram = async (req, res) => {
   try {
     const result = await ProgramService.UpdateProgram(req.body);
 
-    if(result){
-      res.status(200).json({
-          message: "Update successful",
-          data: result // optional: send back updated data
-        });
-    }
+  if (result.success) {
+    res.status(200).json({
+      success: true,
+      message: result.message || "Operation successful",
+      data: result.data || null
+    });
+  } else {
+    res.status(result.statusCode || 400).json({
+      success: false,
+      message: result.message || "Operation failed",
+      error: result.error || null
+    });
+  }
   
   } catch (error) {
     res.status(500).json({
       message: "Update failed",
       error: error.message
     });
-  }
+  }  
 };
 exports.DeleteProgram = async(id)=>{
    return await ProgramService.DeleteProgram(id)
-}
+}  
