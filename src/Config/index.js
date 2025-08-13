@@ -12,7 +12,7 @@ const ProgramService = require('../api/Services/ProgramCourseServices')
 // Require the router
 const userRoute = require('../api/Routes/userRoute');
 const ProgramRoute = require('../api/Routes/ProgramRoutes');
-const departmentRoutes= require('../api/Routes/DepartmentRoutes')
+const departmentRoutes = require('../api/Routes/DepartmentRoutes')
 
 // Example route
 app.get('/', (req, res) => {
