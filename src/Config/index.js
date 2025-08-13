@@ -12,7 +12,7 @@ const ProgramService = require('../api/Services/ProgramCourseServices')
 // Require the router
 const userRoute = require('../api/Routes/userRoute');
 const ProgramRoute = require('../api/Routes/ProgramRoutes');
-const department = require('../api/Models/department');
+const departmentRoutes= require('../api/Routes/DepartmentRoutes')
 
 // Example route
 app.get('/', (req, res) => {
@@ -22,7 +22,7 @@ app.use(express.urlencoded({ extended: true }));
 // Use the router at a mount path
 app.use('/users', userRoute);
 app.use('/program', ProgramRoute)
-add.use('/deparment', department)
+add.use('/deparment', departmentRoutes)
 app.listen(port, () => {
     console.log(`Express API listening at http://localhost:${port}`);
 });
