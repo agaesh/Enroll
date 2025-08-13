@@ -40,7 +40,7 @@ exports.DeleteProgram = async (id) => {
     const findProgram = await ProgramCourse.findOne({ where: { id } });
 
     if (!findProgram) {
-        const error = new Error("Course cannot be found");
+        const error = new Error("Program cannot be found");
         error.status = 404;
         throw error;
     }
