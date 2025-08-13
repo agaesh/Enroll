@@ -8,18 +8,19 @@ app.use(cookieparser());
 require('dotenv').config();
 
 const UserRegister = require("../api/Services/UserService");
+const ProgramService = require('../api/Services/ProgramCourseServices')
 // Require the router
 const userRoute = require('../api/Routes/userRoute');
+const ProgramRoute = require('../api/Routes/ProgramRoutes')
 
 // Example route
 app.get('/', (req, res) => {
     res.send('Hello from Express API!');
 });
-app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 // Use the router at a mount path
 app.use('/users', userRoute);
-
+app.use('/program', ProgramRoute)
 app.listen(port, () => {
     console.log(`Express API listening at http://localhost:${port}`);
 });
