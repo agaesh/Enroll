@@ -21,3 +21,24 @@ exports.Create = async (departmentData) => {
     throw error;
   }
 };
+exports.UpdateDepartment = async (departmentData) => {
+  try{
+    const { id, ...updateData } = departmentData;
+
+    if (id === undefined) {
+      throw new Error("ID must be provided");
+    }
+
+    const [updatedRows] = await DepartmentModel.update(updateData, {
+      where: { id }
+    });
+
+    if (updatedRows > 0) {
+      return "Department updated successfully";
+    } else {
+      return "No department found with the given ID";
+    }
+  }catch(error){
+    throw error
+  }
+};
