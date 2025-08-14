@@ -70,7 +70,7 @@ exports.getDepartmentByID = async (req, res) => {
 
 exports.createDeparment = async (req, res) => {
   try {
-    const addDeparment = await DepartmentService.Create(req.body);
+    const addDeparment = await DepartmentService.CreateDeparment(req.body);
     if(addDeparment){
       res.status(201).json({
           message: addDeparment.message,
