@@ -50,3 +50,6 @@ npm install
 npx sequelize db:migrate
 npx sequelize db:seed:all
 npm run dev
+
+
+im just updating the read iin
