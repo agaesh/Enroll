@@ -13,7 +13,7 @@ module.exports = (sequelize, DataTypes) => {
   }
 
   Department.init({
-    id: {
+    department_id: {
       type: DataTypes.INTEGER,
       primaryKey: true,
       autoIncrement: true
