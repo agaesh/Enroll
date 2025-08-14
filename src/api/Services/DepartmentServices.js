@@ -5,6 +5,14 @@ const { DataTypes } = require('sequelize');
 const { error } = require('console');
 const DepartmentModel= require('../Models/user')(sequelize, DataTypes);
 
+exports.getDepartmentById(id) = async(req,res)=>{
+  if (!id) {
+    throw new Error("Department ID is required");
+  }
+
+  const department = await DepartmentModel.findByPk(id);
+  return department; // Will be null if not found
+}
 exports.Create = async (departmentData) => {
   try {
     const department = await DepartmentModel.create(departmentData);
