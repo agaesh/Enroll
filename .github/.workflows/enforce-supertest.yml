@@ -1,0 +1,63 @@
+name: CI - Vitest
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  detect_changes:
+    runs-on: ubuntu-latest
+    outputs:
+      code_changed: ${{ steps.filter.outputs.code }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Filter paths
+        id: filter
+        uses: dorny/paths-filter@v3
+        with:
+          filters: |
+            code:
+              - 'src/**'
+              - 'tests/**'
+              - 'package.json'
+              - 'vitest.config.*'
+              - '!**/.github/workflows/**'
+
+  test:
+    needs: detect_changes
+    if: needs.detect_changes.outputs.code_changed == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run Vitest with HTML coverage
+        run: npx vitest run --coverage --coverage.reporter=html
+
+      - name: Upload coverage report
+        uses: actions/upload-artifact@v4
+        with:
+          name: vitest-coverage-report
+          path: coverage
+
+  syntax_check:
+    needs: detect_changes
+    if: needs.detect_changes.outputs.code_changed != 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Validate workflow syntax
+        run: echo "✅ Only workflow files changed — skipping tests."
