@@ -14,7 +14,7 @@ exports.getDepartmentById(id) = async(req,res)=>{
   const department = await DepartmentModel.findByPk(id);
   return department; // Will be null if not found
 }
-exports.Create = async (departmentData) => {
+exports.CreateDeparment = async (departmentData) => {
   try {
     const department = await DepartmentModel.create(departmentData);
 
