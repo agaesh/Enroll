@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "start": "node ./src/config/index.js",
-    "dev": "nodemon ./src/config/index.js"
+    "dev": "nodemon ./src/config/index.js",
+    "test": "vitest",
+    "test:run": "vitest run"
   },
   "author": "",
   "license": "ISC",
@@ -20,5 +22,8 @@
     "path": "^0.12.7",
     "sequelize": "^6.37.7",
     "sequelize-cli": "^6.6.3"
+  },
+  "devDependencies": {
+    "vitest": "^3.2.4"
   }
 }
