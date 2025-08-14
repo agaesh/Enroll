@@ -50,6 +50,24 @@ exports.getAllDeparments = async(req, res)=>{
         res.status(error.status || 500).json({ error: error.message || 'Internal Server Error' });
     }
 }
+
+
+exports.getDepartmentByID = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const department = await DepartmentService.getDepartmentByID(id);
+
+    if (!department) {
+      return res.status(404).json({ message: "Department not found" });
+    }
+
+    res.status(200).json(department);
+  } catch (error) {
+    console.error("Error fetching department:", error);
+    res.status(400).json({ message: error.message });
+  }
+};
+
 exports.createDeparment = async (req, res) => {
   try {
     const addDeparment = await DepartmentService.Create(req.body);
@@ -80,5 +98,4 @@ exports.DeleteDepartment = async(req, res)=>{
     res.status(500).json({ message: error.message });
   }
 }
-  
 
