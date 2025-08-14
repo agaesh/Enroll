@@ -11,10 +11,14 @@ router.get('/listing', async(req, res)=>{
    await DeparmentController.getAllDeparments(req,res)
 })
 // POST /api/deparment (create program)
-router.post('/create', async (req, res) => {
+router.post('/', async (req, res) => {
   await DeparmentController.createDeparment(req, res);
 });
 // PUT /api/deparment (create program)
-router.put('/update', async (req, res) => {
-  await DeparmentController.UpdateDeparment(req,res)
+router.put('/', async (req, res) => {
+  await DeparmentController.UpdateDepartment(req,res)
 });
+
+router.delete()
+
+module.exports = router

@@ -22,7 +22,7 @@ app.use(express.urlencoded({ extended: true }));
 // Use the router at a mount path
 app.use('/users', userRoute);
 app.use('/program', ProgramRoute)
-add.use('/deparment', departmentRoutes)
+app.use('/department', departmentRoutes)
 app.listen(port, () => {
     console.log(`Express API listening at http://localhost:${port}`);
 });

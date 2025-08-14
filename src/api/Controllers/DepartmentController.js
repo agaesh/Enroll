@@ -1,9 +1,11 @@
-const DepartmentService = require('../Services/DepartmentService');
+const DepartmentService = require('../Services/DepartmentServices');
 const path = require('path');
 const base = path.resolve(__dirname, '../../../');
 const sequelize = require(path.join(base, 'src', 'config', 'db.js'));
 const { DataTypes } = require('sequelize');
-const DepartmentModel = require('../Models/programcourse')(sequelize, DataTypes)
+const { UpdateProgram } = require('./ProgramCourseController');
+const { error } = require('console');
+const DepartmentModel = require('../Models/department')(sequelize, DataTypes)
 
 exports.getAllDeparments = async(req, res)=>{
     try{
@@ -34,7 +36,7 @@ exports.getAllDeparments = async(req, res)=>{
     .then((departments) => {
         res.status(200).json({
         status: 'success',
-        data: departments
+        data: departments.toJson()
         });
     })
     .catch((error) => {
@@ -50,7 +52,7 @@ exports.getAllDeparments = async(req, res)=>{
 }
 exports.createDeparment = async (req, res) => {
   try {
-    const addDeparment = await DepartmentService.create(req.body);
+    const addDeparment = await DepartmentService.Create(req.body);
     if(addDeparment){
       res.status(201).json({
           message: addDeparment.message,
@@ -61,3 +63,22 @@ exports.createDeparment = async (req, res) => {
     res.status(error.status || 500).json({ error: error.message || 'Internal Server Error' });
   }
 };
+
+exports.UpdateDepartment = async (req, res) => {
+  try {
+    const update = await DepartmentService.UpdateDepartment(req, res);
+    res.status(201).json({ message: update.message });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+exports.DeleteDepartment = async(req, res)=>{
+  try{
+    const deleteDepartment = await DepartmentService.DeleteDepartment(req,res)
+  }catch(error){
+    res.status(500).json({ message: error.message });
+  }
+}
+  
+
