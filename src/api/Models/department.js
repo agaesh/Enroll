@@ -47,7 +47,7 @@ module.exports = (sequelize, DataTypes) => {
     sequelize,
     modelName: 'Department',
     tableName: 'Departments',
-    timestamps: true   // uses created_at and updated_at
+    timestamps: false  // uses created_at and updated_at
   });
 
   return Department;
