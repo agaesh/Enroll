@@ -10,7 +10,7 @@ const DepartmentService = require('../src/api/Services/DepartmentServices')
 describe('DepartmentService - CreateDepartment', () => {
   const mockDepartmentData = {
     department_name: 'Finance',
-    department_code: 'gbdsds',
+    department_code: 'GBS-' + Math.random().toString(36).substring(2, 8).toUpperCase(),
     head_id: 1,
     email: 'fdasdaf'
   };
@@ -48,10 +48,15 @@ describe('DepartmentService - CreateDepartment', () => {
   });
 });
 
-describe("Delete-Department with no id", () => {
+describe("Delete-Department", () => {
   it("should throw 'ID Must Be Provided'", async () => {
     await expect(DepartmentService.DeleteDepartment())
       .rejects
       .toThrow("ID must be provided");
   });
+
+  it("should throw 'No department found with the given ID'", async()=>{
+    await expect(DepartmentService.DeleteDepartment(1231))
+    .resolves.toBe("No department found with the given ID");
+  })
 });
