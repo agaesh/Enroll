@@ -38,8 +38,20 @@ exports.UpdateDepartment = async (departmentData) => {
       throw new Error("ID must be provided");
     }
 
+    if (Object.keys(updateData).length === 0) {
+       throw new Error("Department fields must be provided to edit");
+    }
+
+    const findExistingDeparment = await DepartmentModel.findOne({
+      where: { department_id: id }
+    });
+
+    if(!findExistingDeparment){
+       throw new Error("No Deparment found with the given department id")
+    }
+
     const [updatedRows] = await DepartmentModel.update(updateData, {
-      where: { id }
+      where: { deparment_id:id }
     });
 
     if (updatedRows > 0) {
@@ -59,7 +71,7 @@ exports.DeleteDepartment = async (id) => {
     }
 
     const deletedRows = await DepartmentModel.destroy({
-      where: { id }
+     where: { department_id: id }
     });
 
     if (deletedRows > 0) {
