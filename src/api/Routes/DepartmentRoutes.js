@@ -18,7 +18,4 @@ router.post('/', async (req, res) => {
 router.put('/', async (req, res) => {
   await DeparmentController.UpdateDepartment(req,res)
 });
-
-router.delete()
-
 module.exports = router
