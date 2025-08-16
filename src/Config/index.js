@@ -11,7 +11,8 @@ const UserRegister = require("../api/Services/UserService");
 const ProgramService = require('../api/Services/ProgramCourseServices')
 // Require the router
 const userRoute = require('../api/Routes/userRoute');
-const ProgramRoute = require('../api/Routes/ProgramRoutes')
+const ProgramRoute = require('../api/Routes/ProgramRoutes');
+const departmentRoutes = require('../api/Routes/DepartmentRoutes')
 
 // Example route
 app.get('/', (req, res) => {
@@ -21,6 +22,7 @@ app.use(express.urlencoded({ extended: true }));
 // Use the router at a mount path
 app.use('/users', userRoute);
 app.use('/program', ProgramRoute)
+app.use('/department', departmentRoutes)
 app.listen(port, () => {
     console.log(`Express API listening at http://localhost:${port}`);
 });
