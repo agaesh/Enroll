@@ -39,7 +39,7 @@ exports.UpdateDepartment = async (departmentData) => {
     }
 
     if (Object.keys(updateData).length === 0) {
-       throw new Error("Department fields must be provided to edit");
+       throw new Error("At-Least One Department fields must be provided to update");
     }
 
     const findExistingDeparment = await DepartmentModel.findOne({
