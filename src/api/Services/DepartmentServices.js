@@ -57,7 +57,7 @@ exports.UpdateDepartment = async (departmentData) => {
     if (updatedRows > 0) {
       return "Department updated successfully";
     } else {
-      return "No department found with the given ID";
+      throw new Error("No Department found with the given ID")
     }
   }catch(error){
     throw error
@@ -77,7 +77,7 @@ exports.DeleteDepartment = async (id) => {
     if (deletedRows > 0) {
       return "Department deleted successfully";
     } else {
-      return "No department found with the given ID";
+      throw new Error("No department found with the given ID")
     }
   } catch (error) {
     throw error;
