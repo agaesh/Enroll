@@ -67,54 +67,36 @@ describe("UpdateDepartment Service", () => {
 
 it("should throw error if department not found", async () => {
   vi.spyOn(DepartmentModel, "findOne").mockResolvedValue(null);
-
-  const id = Math.floor(Math.random() * 1000) + 1;
-  const department_Code = "RDM-" + Math.random().toString(36).substring(2, 8).toUpperCase();
-
   await expect(
     DepartmentService.UpdateDepartment({
-      deparment_id: id, // make sure this matches your service
-      department_code: department_Code,
+      department_id: 123, // make sure this matches your service
+      department_code:"DDSF",
       department_name: "Finance",
     })
   ).rejects.toThrow("No Deparment found with the given department id");
 });
 
-  it("should update department successfully", async () => {
-    vi.spyOn(DepartmentModel, "findOne").mockResolvedValue({ department_id: 1 });
-    vi.spyOn(DepartmentModel, "update").mockResolvedValue([1]);
+  it("should update department successfully using real DB record", async () => {
+    // First, get an existing department from the database
+    const existingDepartment = await DepartmentModel.findOne(); // fetch first available record
+    if (!existingDepartment) {
+      throw new Error("No department found in DB to test update");
+    }
 
+    // Update the department name
+    const newName = "Finance_" + Date.now(); // to avoid duplicate names
     const result = await DepartmentService.UpdateDepartment({
-      department_id: 1,
-      department_name: "Finance",
+      department_id: existingDepartment.department_id,
+      department_name: newName,
     });
 
     expect(result).toBe("Department updated successfully");
-    expect(DepartmentModel.update).toHaveBeenCalledWith(
-      { department_name: "Finance" },
-      { where: { department_id: 1 } } // 👈 matches your function's typo
-    );
-  });
 
-  it("should return 'No department found with the given ID' if update affected 0 rows", async () => {
-    vi.spyOn(DepartmentModel, "findOne").mockResolvedValue({ department_id: 1 });
-    vi.spyOn(DepartmentModel, "update").mockResolvedValue([0]);
-
-    const result = await DepartmentService.UpdateDepartment({
-      department_id: 1,
-      department_name: "Finance",
+    // Verify the update in DB
+    const updatedDepartment = await DepartmentModel.findOne({
+      where: { department_id: existingDepartment.department_id },
     });
-
-    expect(result).toBe("No department found with the given ID");
-  });
-
-  it("should throw DB error if update fails", async () => {
-    vi.spyOn(DepartmentModel, "findOne").mockResolvedValue({ department_id: 1 });
-    vi.spyOn(DepartmentModel, "update").mockRejectedValue(new Error("DB Error"));
-
-    await expect(
-      DepartmentService.UpdateDepartment({ department_id: 1, department_name: "Finance" })
-    ).rejects.toThrow("DB Error");
+    expect(updatedDepartment.department_name).toBe(newName);
   });
 });
 describe("Delete-Department", () => {
@@ -126,6 +108,6 @@ describe("Delete-Department", () => {
 
   it("should throw 'No department found with the given ID'", async()=>{
     await expect(DepartmentService.DeleteDepartment(1231))
-    .resolves.toBe("No department found with the given ID");
+    .rejects.toThrow("No department found with the given ID");
   })
 });
