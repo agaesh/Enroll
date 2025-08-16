@@ -32,9 +32,9 @@ exports.CreateDeparment = async (departmentData) => {
 };
 exports.UpdateDepartment = async (departmentData) => {
   try{
-    const { id, ...updateData } = departmentData;
+    const { department_id, ...updateData } = departmentData;
 
-    if (id === undefined) {
+    if (department_id === undefined) {
       throw new Error("ID must be provided");
     }
 
@@ -43,7 +43,7 @@ exports.UpdateDepartment = async (departmentData) => {
     }
 
     const findExistingDeparment = await DepartmentModel.findOne({
-      where: { department_id: id }
+      where: { department_id}
     });
 
     if(!findExistingDeparment){
@@ -51,7 +51,7 @@ exports.UpdateDepartment = async (departmentData) => {
     }
 
     const [updatedRows] = await DepartmentModel.update(updateData, {
-      where: { deparment_id:id }
+      where: {department_id}
     });
 
     if (updatedRows > 0) {
