@@ -25,6 +25,7 @@ jobs:
               - 'package.json'
               - 'vitest.config.*'
               - '!**/.github/workflows/**'
+              - 'README.md'
   test:
     runs-on: ubuntu-latest
     steps:
@@ -40,8 +41,7 @@ jobs:
         run: npm ci
 
       - name: Run Vitest with HTML coverage
-        run: npx vitest run --coverage --coverage.provider=v8 --coverage.reporter=html --reporter=default --reporter=github-actions
-
+        run: npx vitest run --coverage --coverage.reporter=html --reporter=default --reporter=github-actions
 
       - name: Upload coverage report
         uses: actions/upload-artifact@v4
