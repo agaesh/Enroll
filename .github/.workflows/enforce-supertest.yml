@@ -25,6 +25,7 @@ jobs:
               - 'package.json'
               - 'vitest.config.*'
               - '!**/.github/workflows/**'
+              - 'README.md'
   test:
     runs-on: ubuntu-latest
     steps:
