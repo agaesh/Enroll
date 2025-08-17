@@ -25,10 +25,7 @@ jobs:
               - 'package.json'
               - 'vitest.config.*'
               - '!**/.github/workflows/**'
-
   test:
-    needs: detect_changes
-    if: needs.detect_changes.outputs.code_changed == 'true'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -50,14 +47,3 @@ jobs:
         with:
           name: vitest-coverage-report
           path: coverage
-
-  syntax_check:
-    needs: detect_changes
-    if: needs.detect_changes.outputs.code_changed != 'true'
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Validate workflow syntax
-        run: echo "✅ Only workflow files changed — skipping tests."
