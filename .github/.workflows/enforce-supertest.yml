@@ -22,7 +22,7 @@ jobs:
 
       - name: Run Vitest with HTML coverage
         run: npx vitest run --coverage --coverage.provider=v8 --coverage.reporter=html --reporter=default --reporter=github-actions
-
+        
       - name: Upload coverage report
         uses: actions/upload-artifact@v4
         with:
