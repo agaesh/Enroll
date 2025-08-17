@@ -11,3 +11,12 @@ describe("README.md content check", () => {
     expect(content).toContain("this is super fun bro");
   });
 });
+
+describe("Readme.md contains this this this", ()=>{
+  it("should contains this sentencese", ()=>{
+    const readmePath = join(process.cwd(), "README.md")
+    const content  = readFileSync(readmePath, "utf-8")
+
+    expect(content).toContain("this this this")
+  })
+})
