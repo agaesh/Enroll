@@ -6,26 +6,6 @@ on:
       - main
 
 jobs:
-  detect_changes:
-    runs-on: ubuntu-latest
-    outputs:
-      code_changed: ${{ steps.filter.outputs.code }}
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Filter paths
-        id: filter
-        uses: dorny/paths-filter@v3
-        with:
-          filters: |
-            code:
-              - 'src/**'
-              - 'tests/**'
-              - 'package.json'
-              - 'vitest.config.*'
-              - '!**/.github/workflows/**'
-              - 'README.md'
   test:
     runs-on: ubuntu-latest
     steps:
@@ -41,10 +21,4 @@ jobs:
         run: npm ci
 
       - name: Run Vitest with HTML coverage
-        run: npx vitest run --coverage --coverage.reporter=html --reporter=default --reporter=github-actions
-
-      - name: Upload coverage report
-        uses: actions/upload-artifact@v4
-        with:
-          name: vitest-coverage-report
-          path: coverage
+        run: npx vitest run --coverage --coverage.provider=v8 --coverage.reporter=html --reporter=default --reporter=github-actions
