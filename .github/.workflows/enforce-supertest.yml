@@ -40,7 +40,7 @@ jobs:
         run: npm ci
 
       - name: Run Vitest with HTML coverage
-        run: npx vitest run --coverage --coverage.reporter=html
+        run: npx vitest run --coverage --coverage.reporter=html --reporter=default --reporter=github-actions
 
       - name: Upload coverage report
         uses: actions/upload-artifact@v4
