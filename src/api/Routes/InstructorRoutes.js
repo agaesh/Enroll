@@ -15,7 +15,7 @@ router.post('/', async (req, res) => {
   await InstructorController.CreateInstructor(req, res);
 });
 // PUT /api/deparment (create program)
-router.put('/', async (req, res) => {
+router.put('/:id', async (req, res) => {
   await InstructorController.UpdateInstructor(req,res)
 });
 
