@@ -35,4 +35,15 @@ exports.CreateInstructor = async (req, res) => {
     });
   }
 };
+exports.UpdateInstructor = async(req, res)=>{
+    try{
+         const update =  await InstructorService.UpdateInstructor(req.param.id, req.body);
 
+         return res.status(201).JSON({
+           success: true,
+           message: update.message
+         })
+    }catch(error ){
+      throw error;
+    }
+}
