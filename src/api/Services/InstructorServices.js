@@ -43,3 +43,30 @@ exports.UpdateInstructor = async (req,res) => {
   }
 };
 
+exports.DeleteInstructor = async(InstructorData)=>{
+    try{
+
+        // Check courses
+        const courseCount = await ProgramCourse.count({ where: { instructor_Id: id, type: 'course'} });
+
+        if (courseCount > 0) {
+            throw new Error("Cannot delete instructor: assigned to courses");
+        }
+
+        // Check programs
+        const programs = await Instructor.findByPk(id, { include: Program });
+
+        if (programs.Programs && programs.Programs.length > 0) {
+            throw new Error("Cannot delete instructor: assigned to programs");
+        }
+
+        const deleteInstructor = await Instructor.destroy(InstructorData)
+
+        return{
+            success:true,
+            message: "Instructor Deleted Successfully"
+        }
+    }catch(error){
+        throw error;
+    }
+}
