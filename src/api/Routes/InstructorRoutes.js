@@ -7,7 +7,7 @@ router.get('/', (req, res) => {
   res.status(200).send("Welcome To Instructor API");
 });
 
-router.get('/listing', async(req, res)=>{
+router.get('/', async(req, res)=>{
   //  await InstructorController.getAllInstructor(req,res)
 })
 // POST /api/deparment (create program)
