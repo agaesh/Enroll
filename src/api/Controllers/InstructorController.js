@@ -6,7 +6,7 @@ const { DataTypes } = require('sequelize');
 const { error } = require('console');
 const User = require("../Models/User")(sequelize, DataTypes)
 const InstructorModel = require('../Models/instructor')(sequelize, DataTypes)
-const { verifyWebToken } = require("../middleware/verifyWebToken");
+const { verifyWebToken } = require("../../Middlewares/authMiddleware");
 
 exports.CreateInstructor = async (req, res) => {
   try {
