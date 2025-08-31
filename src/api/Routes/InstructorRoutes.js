@@ -3,7 +3,7 @@ const router = express.Router();
 const InstructorController = require('../Controllers/InstructorController')
 
 // GET /api/programs
-router.get('/', (req, res) => {
+router.get('/home', (req, res) => {
   res.status(200).send("Welcome To Instructor API");
 });
 
