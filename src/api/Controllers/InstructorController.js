@@ -47,3 +47,17 @@ exports.UpdateInstructor = async(req, res)=>{
       throw error;
     }
 }
+exports.DeleteInstructor = async (req, res) => {
+  try {   
+      const DeleteInstructor = await InstructorService.DeleteInstructor(req.params.id);
+      return res.status(200).json({
+        success:true,
+        message: "Instructor deleted successfully" 
+      });
+    } catch (error) {
+      return res.status(500).json({ 
+        message: "Error deleting instructor", 
+        error: error.message 
+      });
+    }
+};   
