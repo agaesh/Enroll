@@ -32,13 +32,13 @@ Its modular architecture ensures maintainability and ease of future upgrades.
 ## 🆕 RECENT UPDATES
 
 * ✅ **Instructor CRUD operations** have been implemented
-* ⚠️ **Testing is incomplete** – Instructor endpoints have not been fully verified yet
+* ✅ **Unit Testing is complete** – Instructor endpoints have not been fully verified yet
 ---
 
 ## 🔗 API ENDPOINTS (Instructor)
 
-> ⚠️ **Note:** Unit Testing have been conducted.
-> ⚠️ **Note:** Integration Test have not been conducted.
+> ✅ **Note:** Unit Testing has been conducted.
+> ⚠️ **Note:** Integration Test has not been conducted.
 
 | Method | Endpoint               | Description                                                     | Status                       |
 | ------ | ---------------------- | --------------------------------------------------------------- | ---------------------------- |
