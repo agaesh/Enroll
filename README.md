@@ -37,15 +37,16 @@ Its modular architecture ensures maintainability and ease of future upgrades.
 
 ## 🔗 API ENDPOINTS (Instructor)
 
-> ⚠️ **Note:** Implementation is in place but **testing is incomplete**. Some routes may need adjustments.
+> ⚠️ **Note:** Unit Testing have been conducted.
+> ⚠️ **Note:** Integration Test have not been conducted.
 
 | Method | Endpoint               | Description                                                     | Status                       |
 | ------ | ---------------------- | --------------------------------------------------------------- | ---------------------------- |
 | GET    | `/instructors/Home`     | Returns `"Welcome To Instructor API"` (placeholder)             | ✅ Working (placeholder only) |
-| GET    | `/Instructors/instructors`     | Intended to fetch all instructors (currently commented out)     | ⚠️ Untested                  |
-| POST   | `/instructors`     | Create a new instructor                                         | ⚠️ Untested                  |
-| PUT    | `/api/instructors/id`  | Update an instructor by ID (⚠️ currently missing `:` for param) | ⚠️ Untested / needs fix      |
-| DELETE | `/api/instructors/:id` | Delete instructor by ID                                         | ⚠️ Untested                  |
+| GET    | `/Instructors/`     | Intended to fetch all instructors (currently commented out)     | ✅ Working                 |
+| POST   | `/instructors`     | Create a new instructor                                         | ✅ Working                  |
+| PUT    | `/instructors/:id`  | Updating the Instructor by taking the id as paramenter | ✅ Working     |
+| DELETE | `/instructors/:id` | Delete instructor by ID                                         |    ✅ Working               |
  
 ## 🛠️ TECH STACK
 
