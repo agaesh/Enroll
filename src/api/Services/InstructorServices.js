@@ -32,12 +32,15 @@ exports.UpdateInstructor = async (req,res) => {
     }
 
     // Update instructor with new data
-    await instructor.update(req.body);
+   const update =   await instructor.update(InstructorData);
+  
+   if(update != undefined){
     return {
-      success: true,
-      message: "Instructor  updated successfully",
-      fields: updateFields.toJSON()
-    }; 
+        success: true,
+        message: "Instructor  updated successfully",
+        data: updateFields.toJSON()
+      }; 
+   }
   } catch (error) {
     throw error;
   }
