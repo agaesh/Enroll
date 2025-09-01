@@ -20,10 +20,10 @@ exports.CreateInstructor= async(InstructorData)=>{
     throw error;
   }
 }
-exports.UpdateInstructor = async (req,res) => {
+exports.UpdateInstructor = async (id,InstructorData) => {
   try {
     // Find instructor by primary key (id)
-    const instructor = await Instructor.findByPk(req.param.id);
+    const instructor = await Instructor.findByPk(id);
 
     if (!instructor) {
       const error = new Error("Instructor not found with the given id");
@@ -40,7 +40,7 @@ exports.UpdateInstructor = async (req,res) => {
         message: "Instructor  updated successfully",
         data: updateFields.toJSON()
       }; 
-   }
+    }
   } catch (error) {
     throw error;
   }
