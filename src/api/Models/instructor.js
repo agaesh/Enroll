@@ -24,11 +24,12 @@ module.exports = (sequelize, DataTypes) => {
     email: DataTypes.STRING,
     phone_number: DataTypes.STRING,
     hire_date: DataTypes.DATE,
-    department_id: DataTypes.INTEGER,
+    department: DataTypes.INTEGER,
     is_active: DataTypes.BOOLEAN
   }, {
     sequelize,
     modelName: 'Instructor',
+    timestamps: true
   });
   return Instructor;
 };

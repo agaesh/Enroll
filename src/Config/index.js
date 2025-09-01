@@ -10,9 +10,10 @@ require('dotenv').config();
 const UserRegister = require("../api/Services/UserService");
 const ProgramService = require('../api/Services/ProgramCourseServices')
 // Require the router
-const userRoute = require('../api/Routes/userRoute');
-const ProgramRoute = require('../api/Routes/ProgramRoutes');
+const userRoutes = require('../api/Routes/userRoute');
+const ProgramRoutes = require('../api/Routes/ProgramRoutes');
 const departmentRoutes = require('../api/Routes/DepartmentRoutes')
+const InstructorRoutes = require("../api/Routes/InstructorRoutes")
 
 // Example route
 app.get('/', (req, res) => {
@@ -20,9 +21,10 @@ app.get('/', (req, res) => {
 });
 app.use(express.urlencoded({ extended: true }));
 // Use the router at a mount path
-app.use('/users', userRoute);
-app.use('/program', ProgramRoute)
+app.use('/users', userRoutes);
+app.use('/program', ProgramRoutes)
 app.use('/department', departmentRoutes)
+app.use("/instructor", InstructorRoutes)
 app.listen(port, () => {
     console.log(`Express API listening at http://localhost:${port}`);
 });
