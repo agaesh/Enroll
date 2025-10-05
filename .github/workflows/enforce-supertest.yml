@@ -4,9 +4,13 @@ on:
   pull_request:
     branches:
       - main
+    paths:
+      - 'src/**'   # only trigger when files in src/ are changed
   push:
     branches:
       - main
+    paths:
+      - 'src/**'   # only trigger when files in src/ are changed
 
 jobs:
   test:
