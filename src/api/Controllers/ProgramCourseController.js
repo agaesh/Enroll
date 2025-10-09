@@ -89,6 +89,8 @@ export const UpdateProgram = async (req, res) => {
     });
   }  
 };
-exports.DeleteProgram = async(id)=>{
-   return await ProgramService.DeleteProgram(id)
-}  
+
+// ✅ Delete Program
+export const DeleteProgram = async (id) => {
+  return await ProgramService.DeleteProgram(id);
+};
