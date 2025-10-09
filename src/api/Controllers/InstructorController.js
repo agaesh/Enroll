@@ -1,14 +1,22 @@
-const InstructorService = require('../Services/InstructorServices');
-const path = require('path');
-const base = path.resolve(__dirname, '../../../');
-const sequelize = require(path.join(base, 'src', 'config', 'db.js'));
-const { DataTypes } = require('sequelize');
-const { error } = require('console');
-const User = require("../Models/User")(sequelize, DataTypes)
-const InstructorModel = require('../Models/instructor')(sequelize, DataTypes)
-const { verifyWebToken } = require("../../Middlewares/authMiddleware");
+import InstructorService from "../Services/InstructorServices.js";
+import path from "path";
+import { fileURLToPath } from "url";
+import { DataTypes } from "sequelize";
+import sequelize from "../../config/db.js";
+import UserModelDefiner from "../Models/user.js";
+import InstructorModelDefiner from "../Models/instructor.js";
+import { verifyWebToken } from "../../Middlewares/authMiddleware.js";
 
-exports.CreateInstructor = async (req, res) => {
+// Resolve __dirname (ESM compatible)
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+const base = path.resolve(__dirname, "../../../");
+
+const User = UserModelDefiner(sequelize, DataTypes);
+const Instructor = InstructorModelDefiner(sequelize, DataTypes);
+
+// ✅ Create Instructor
+export const CreateInstructor = async (req, res) => {
   try {
 
     const {id, ...data} = req.body
