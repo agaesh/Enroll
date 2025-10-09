@@ -62,10 +62,11 @@ export const getAllDepartments = async (req, res) => {
   }
 };
 
-exports.createDeparment = async (req, res) => {
+// ✅ Create Department
+export const createDepartment = async (req, res) => {
   try {
-    const addDeparment = await DepartmentService.CreateDeparment(req.body);
-    if(addDeparment){
+    const addDepartment = await DepartmentService.CreateDeparment(req.body);
+    if (addDepartment) {
       res.status(201).json({
           message: addDeparment.message,
           data: addDeparment.data
