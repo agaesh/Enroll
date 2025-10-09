@@ -23,7 +23,8 @@ export const createProgram = async (req, res) => {
   }
 };
 
-exports.getAllPrograms = async (req, res) => {
+// ✅ Get All Programs
+export const getAllPrograms = async (req, res) => {
   try {
     let { top, page, limit } = req.body;
 
@@ -32,8 +33,8 @@ exports.getAllPrograms = async (req, res) => {
     page = parseInt(page);
     limit = parseInt(limit);
 
-    let queryOptions = {
-      order: [['createdAt', 'DESC']] // latest first
+    const queryOptions = {
+      order: [["createdAt", "DESC"]],
     };
 
     if (top) {
@@ -50,18 +51,20 @@ exports.getAllPrograms = async (req, res) => {
     const programs = await ProgramCourse.findAll(queryOptions);
 
     res.status(200).json({
-      status: 'success',
-      data: programs
+      status: "success",
+      data: programs,
     });
 
   } catch (error) {
-    res.status(500).json({ 
-      status: 'error',
-      message: error.message 
+    res.status(500).json({
+      status: "error",
+      message: error.message,
     });
   }
 };
-exports.UpdateProgram = async (req, res) => {
+
+// ✅ Update Program
+export const UpdateProgram = async (req, res) => {
   try {
     const result = await ProgramService.UpdateProgram(req.body);
 
