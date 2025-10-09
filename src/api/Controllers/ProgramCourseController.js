@@ -1,11 +1,15 @@
-const ProgramService = require("../Services/ProgramCourseServices")
-const path = require('path');
-const base = path.resolve(__dirname, '../../../');
-const sequelize = require(path.join(base, 'src', 'config', 'db.js'));
-const { DataTypes } = require('sequelize');
-const ProgramCourse = require('../Models/programcourse')(sequelize, DataTypes)
+import ProgramService from "../Services/ProgramCourseServices.js";
+import path from "path";
+import { fileURLToPath } from "url";
+import { DataTypes } from "sequelize";
+import sequelize from "../../../src/config/db.js";
+import defineProgramCourse from "../Models/programcourse.js";
 
-exports.createProgram = async (req, res) => {
+const ProgramCourse = defineProgramCourse(sequelize, DataTypes);
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+
+// ✅ Create Program
+export const createProgram = async (req, res) => {
   try {
     const addProgram = await ProgramService.createProgram(req.body);
     if(addProgram){
