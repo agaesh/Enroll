@@ -77,7 +77,8 @@ export const createDepartment = async (req, res) => {
   }
 };
 
-exports.UpdateDepartment = async (req, res) => {
+// ✅ Update Department
+export const updateDepartment = async (req, res) => {
   try {
     const update = await DepartmentService.UpdateDepartment(req, res);
     res.status(201).json({ message: update.message });
