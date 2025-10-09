@@ -20,18 +20,19 @@ export const LoginUser = async (req, res) => {
   try {
     const isLogin = await userService.LoginUser(req.body);
 
-    res.cookie("token", isLogin.token, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
-      sameSite: 'strict',
-      maxAge: 60 * 60 * 1000 
-    });
 
-    if(isLogin) {
-      return res.status(200).json({
-        message: 'Login successful',
+    if(isLogin) { 
+      res.cookie("token", isLogin.token, {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === 'production',
+        sameSite: 'strict',
+        maxAge: 60 * 60 * 1000 
       });
-    }
+
+        return res.status(200).json({
+          message: 'Login successful',
+        });
+      }
   }catch(error){
     res.status(error.status || 500).json({ error: error.message || 'Internal Server Error' });
   }
