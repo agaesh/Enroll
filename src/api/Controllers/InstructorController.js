@@ -18,9 +18,7 @@ const Instructor = InstructorModelDefiner(sequelize, DataTypes);
 // ✅ Create Instructor
 export const CreateInstructor = async (req, res) => {
   try {
-
     const {id, ...data} = req.body
-
     const findInstructor = await Instructor.findOne({ where: { user_id: id } });
 
     if (findInstructor) {
@@ -55,6 +53,22 @@ export const UpdateInstructor = async (req, res) => {
   } catch (error) {
     return res.status(500).json({
       message: "Error updating instructor",
+      error: error.message,
+    });
+  }
+};
+// ✅ Delete Instructor
+export const DeleteInstructor = async (req, res) => {
+  try {
+    await InstructorService.DeleteInstructor(req.params.id);
+
+    return res.status(200).json({
+      success: true,
+      message: "Instructor deleted successfully",
+    });
+  } catch (error) {
+    return res.status(500).json({
+      message: "Error deleting instructor",
       error: error.message,
     });
   }
