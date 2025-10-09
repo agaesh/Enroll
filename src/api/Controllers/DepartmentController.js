@@ -47,6 +47,8 @@ export const getAllDepartments = async (req, res) => {
       .json({ error: error.message || 'Internal Server Error' });
   }
 };
+// ✅ Get Department by ID
+export const getDepartmentByID = async (req, res) => {
   try {
     const { id } = req.params;
     const department = await DepartmentService.getDepartmentByID(id);
@@ -87,11 +89,11 @@ export const updateDepartment = async (req, res) => {
   }
 };
 
-exports.DeleteDepartment = async(req, res)=>{
-  try{
-    const deleteDepartment = await DepartmentService.DeleteDepartment(req,res)
-  }catch(error){
+// ✅ Delete Department
+export const deleteDepartment = async (req, res) => {
+  try {
+    await DepartmentService.DeleteDepartment(req, res);
+  } catch (error) {
     res.status(500).json({ message: error.message });
   }
-}
-
+};
