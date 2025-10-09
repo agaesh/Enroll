@@ -1,6 +1,7 @@
-const userService = require('../Services/UserService');
+import userService from "../Services/UserService.js";
 
-exports.registerUser = async (req, res) => {
+// ✅ Register User
+export const registerUser = async (req, res) => {
   try {
     const newUser = await userService.registerUser(req.body);
     if(newUser){
@@ -14,12 +15,12 @@ exports.registerUser = async (req, res) => {
   }
 };
 
-exports.LoginUser = async(req,res)=>{
-  try{
-      
-    const isLogin  = await userService.LoginUser(req.body)
+// ✅ Login User
+export const LoginUser = async (req, res) => {
+  try {
+    const isLogin = await userService.LoginUser(req.body);
 
-    res.cookie('token', isLogin.token, {
+    res.cookie("token", isLogin.token, {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
       sameSite: 'strict',
@@ -34,4 +35,4 @@ exports.LoginUser = async(req,res)=>{
   }catch(error){
     res.status(error.status || 500).json({ error: error.message || 'Internal Server Error' });
   }
-}
+};
