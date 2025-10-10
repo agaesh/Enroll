@@ -1,58 +1,54 @@
-const DepartmentService = require('../Services/DepartmentServices');
-const path = require('path');
-const base = path.resolve(__dirname, '../../../');
-const sequelize = require(path.join(base, 'src', 'config', 'db.js'));
-const { DataTypes } = require('sequelize');
-const { UpdateProgram } = require('./ProgramCourseController');
-const { error } = require('console');
-const DepartmentModel = require('../Models/department')(sequelize, DataTypes)
+import DepartmentService from '../Services/DepartmentServices.js';
+import path from 'path';
+import { fileURLToPath } from 'url';
+import { DataTypes } from 'sequelize';
+import { UpdateProgram } from './ProgramCourseController.js';
+import sequelize from '../../../src/config/db.js';
+import defineDepartmentModel from '../Models/department.js';
 
-exports.getAllDeparments = async(req, res)=>{
-    try{
+// Fix __dirname in ES modules
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
-     let {top, page, limit} = req.body
+// Initialize model
+const DepartmentModel = defineDepartmentModel(sequelize, DataTypes);
+
+// ✅ Get All Departments
+export const getAllDepartments = async (req, res) => {
+  try {
+    let { top, page, limit } = req.body;
 
     // Convert string query params to numbers
     top = parseInt(top);
     page = parseInt(page);
     limit = parseInt(limit);
 
-    let queryOptions = {
-      order: [['createdAt', 'DESC']] // latest first
+    const queryOptions = {
+      order: [['createdAt', 'DESC']], // latest first
     };
 
     if (top) {
       // Return only top X records
       queryOptions.limit = top;
-    } 
-    else if (page && limit) {
-      // Apply pagination
-      const offset = (page - 1) * limit;
+    } else if (page && limit) {
       queryOptions.limit = limit;
-      queryOptions.offset = offset;
+      queryOptions.offset = (page - 1) * limit;
     }
 
-    DepartmentModel.findAll(queryOptions)
-    .then((departments) => {
-        res.status(200).json({
-        status: 'success',
-        data: departments.toJson()
-        });
-    })
-    .catch((error) => {
-        res.status(500).json({
-        status: 'error',
-        message: error.message
-        });
+    const departments = await DepartmentModel.findAll(queryOptions);
+
+    res.status(200).json({
+      status: 'success',
+      data: departments, // No need for toJson()
     });
-
-    }catch(error){
-        res.status(error.status || 500).json({ error: error.message || 'Internal Server Error' });
-    }
-}
-
-
-exports.getDepartmentByID = async (req, res) => {
+  } catch (error) {
+    res
+      .status(error.status || 500)
+      .json({ error: error.message || 'Internal Server Error' });
+  }
+};
+// ✅ Get Department by ID
+export const getDepartmentByID = async (req, res) => {
   try {
     const { id } = req.params;
     const department = await DepartmentService.getDepartmentByID(id);
@@ -68,10 +64,11 @@ exports.getDepartmentByID = async (req, res) => {
   }
 };
 
-exports.createDeparment = async (req, res) => {
+// ✅ Create Department
+export const createDepartment = async (req, res) => {
   try {
-    const addDeparment = await DepartmentService.CreateDeparment(req.body);
-    if(addDeparment){
+    const addDepartment = await DepartmentService.CreateDeparment(req.body);
+    if (addDepartment) {
       res.status(201).json({
           message: addDeparment.message,
           data: addDeparment.data
@@ -82,7 +79,8 @@ exports.createDeparment = async (req, res) => {
   }
 };
 
-exports.UpdateDepartment = async (req, res) => {
+// ✅ Update Department
+export const updateDepartment = async (req, res) => {
   try {
     const update = await DepartmentService.UpdateDepartment(req, res);
     res.status(201).json({ message: update.message });
@@ -91,11 +89,11 @@ exports.UpdateDepartment = async (req, res) => {
   }
 };
 
-exports.DeleteDepartment = async(req, res)=>{
-  try{
-    const deleteDepartment = await DepartmentService.DeleteDepartment(req,res)
-  }catch(error){
+// ✅ Delete Department
+export const deleteDepartment = async (req, res) => {
+  try {
+    await DepartmentService.DeleteDepartment(req, res);
+  } catch (error) {
     res.status(500).json({ message: error.message });
   }
-}
-
+};
