@@ -1,70 +1,86 @@
-const bcrypt = require("bcrypt");
-const path = require('path');
-const base = path.resolve(__dirname, '../../../');
-const sequelize = require(path.join(base, 'src', 'config', 'db.js'));
-const { DataTypes } = require('sequelize');
-const jwt = require('jsonwebtoken');
-const User = require('../Models/user')(sequelize, DataTypes);
+import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
+import path from "path";
+import { fileURLToPath } from "url";
+import { DataTypes } from "sequelize";
+import sequelize from "../../../src/config/db.js";
+import UserModel from "../Models/user.js";
 
-exports.registerUser = async (body) => {
+// Resolve __dirname for ES module
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+const User = UserModel(sequelize, DataTypes);
+
+// ✅ Register User
+export const registerUser = async (body) => {
   try {
-    // Handle user registration
-    const username = body.username;
-    const email = body.email;
-    let password = body.password;
+    const { username, email, password } = body;
 
-    // Call DB or validation logic
+    // Check existing user
     const existingUser = await User.findOne({ where: { email } });
     if (existingUser) {
-      const error = new Error('Email already in use');
+      const error = new Error("Email already in use");
       error.status = 409;
       throw error;
     }
 
-    const hashedPassword = await bcrypt.hash(password, 10)
-    password = hashedPassword
-    const newUser = await User.create({ username, email, password });
-    return newUser; // controller will format and send response
-    
+    // Hash password
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    // Create new user
+    const newUser = await User.create({
+      username,
+      email,
+      password: hashedPassword,
+    });
+
+    return newUser;
   } catch (error) {
     throw error;
   }
 };
 
-exports.LoginUser = async(body)=>{
-  try{
+// ✅ Login User
+export const loginUser = async (body) => {
+  try {
+    const { email, password } = body;
 
-    const email = body. email;
-    const password = body.password;
-    const findUser = await User.findOne({
-    where: { email }
-    });
-
-    const validatePassword = await bcrypt.compare(password, findUser.password)
-
-    if(!findUser){
-      const error = new Error('Email does not exist');
+    // Find user
+    const findUser = await User.findOne({ where: { email } });
+    if (!findUser) {
+      const error = new Error("Email does not exist");
       error.status = 401;
-      throw error
+      throw error;
     }
-    if(!validatePassword){
-      const error = new Error('User Account does not exist. Please Register your account' ) 
+
+    // Validate password
+    const validatePassword = await bcrypt.compare(password, findUser.password);
+    if (!validatePassword) {
+      const error = new Error(
+        "Invalid credentials. Please check your password or register an account."
+      );
       error.status = 400;
-      throw error
+      throw error;
     }
 
-    const token = jwt.sign({ id: findUser.id, email: findUser.email }, process.env.JWT_SECRET, {
-      expiresIn: '1h'
-    });
+    // Generate token
+    const token = jwt.sign(
+      { id: findUser.id, email: findUser.email },
+      process.env.JWT_SECRET,
+      { expiresIn: "1h" }
+    );
 
-     // Return both token and user data (excluding password)
+    // Return token + sanitized user
+    const { password: _, ...userData } = findUser.toJSON();
+
     return {
+      success: true,
+      message: "Login successful",
       token,
-      findUser
+      user: userData,
     };
-   
-  }catch(error){
+  } catch (error) {
     throw error;
   }
-}
-
+};
