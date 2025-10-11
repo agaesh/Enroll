@@ -1,26 +1,33 @@
-const express = require('express');
+import express from 'express';
+import InstructorController from '../Controllers/InstructorController.js';
+import validationId from '../Validators/RequiredID.js';
+import validationBody from '../Validators/RequiredBody.js';
+
 const router = express.Router();
-const InstructorController = require('../Controllers/InstructorController')
-const validationId  = require('../Validators/RequiredID');
-const validationBody = require('../Validators/RequiredBody')
-// GET /api/programs
+
+// GET /api/instructor/home
 router.get('/home', (req, res) => {
-  res.status(200).send("Welcome To Instructor API");
+  res.status(200).send('Welcome To Instructor API');
 });
 
-router.get('/', async(req, res)=>{
-  //  await InstructorController.getAllInstructor(req,res)
-})
-// POST /api/deparment (create program)
+// GET /api/instructor
+router.get('/', async (req, res) => {
+  // await InstructorController.getAllInstructor(req, res);
+});
+
+// POST /api/instructor (create instructor)
 router.post('/', async (req, res) => {
   await InstructorController.CreateInstructor(req, res);
 });
-// PUT /api/deparment (create program)
+
+// PUT /api/instructor/:id (update instructor)
 router.put('/:id', [...validationId, ...validationBody], async (req, res) => {
-  await InstructorController.UpdateInstructor(req,res)
+  await InstructorController.UpdateInstructor(req, res);
 });
 
+// DELETE /api/instructor/:id (delete instructor)
 router.delete('/:id', [...validationId, ...validationBody], async (req, res) => {
-  await InstructorController.DeleteInstructor(req,res)
+  await InstructorController.DeleteInstructor(req, res);
 });
-module.exports = router
+
+export default router;
