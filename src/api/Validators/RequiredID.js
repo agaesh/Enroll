@@ -1,4 +1,4 @@
-const { param, validationResult } = require('express-validator');
+import { param, validationResult } from 'express-validator';
 
 const RequiredId = [
   // Check the id param
@@ -19,4 +19,4 @@ const RequiredId = [
   }
 ];
 
-module.exports = RequiredId;
+export default RequiredId;
