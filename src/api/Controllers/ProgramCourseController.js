@@ -1,11 +1,15 @@
-const ProgramService = require("../Services/ProgramCourseServices")
-const path = require('path');
-const base = path.resolve(__dirname, '../../../');
-const sequelize = require(path.join(base, 'src', 'config', 'db.js'));
-const { DataTypes } = require('sequelize');
-const ProgramCourse = require('../Models/programcourse')(sequelize, DataTypes)
+import ProgramService from "../Services/ProgramCourseServices.js";
+import path from "path";
+import { fileURLToPath } from "url";
+import { DataTypes } from "sequelize";
+import sequelize from "../../../src/config/db.js";
+import defineProgramCourse from "../Models/programcourse.js";
 
-exports.createProgram = async (req, res) => {
+const ProgramCourse = defineProgramCourse(sequelize, DataTypes);
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+
+// ✅ Create Program
+export const createProgram = async (req, res) => {
   try {
     const addProgram = await ProgramService.createProgram(req.body);
     if(addProgram){
@@ -19,7 +23,8 @@ exports.createProgram = async (req, res) => {
   }
 };
 
-exports.getAllPrograms = async (req, res) => {
+// ✅ Get All Programs
+export const getAllPrograms = async (req, res) => {
   try {
     let { top, page, limit } = req.body;
 
@@ -28,8 +33,8 @@ exports.getAllPrograms = async (req, res) => {
     page = parseInt(page);
     limit = parseInt(limit);
 
-    let queryOptions = {
-      order: [['createdAt', 'DESC']] // latest first
+    const queryOptions = {
+      order: [["createdAt", "DESC"]],
     };
 
     if (top) {
@@ -46,18 +51,20 @@ exports.getAllPrograms = async (req, res) => {
     const programs = await ProgramCourse.findAll(queryOptions);
 
     res.status(200).json({
-      status: 'success',
-      data: programs
+      status: "success",
+      data: programs,
     });
 
   } catch (error) {
-    res.status(500).json({ 
-      status: 'error',
-      message: error.message 
+    res.status(500).json({
+      status: "error",
+      message: error.message,
     });
   }
 };
-exports.UpdateProgram = async (req, res) => {
+
+// ✅ Update Program
+export const UpdateProgram = async (req, res) => {
   try {
     const result = await ProgramService.UpdateProgram(req.body);
 
@@ -82,6 +89,8 @@ exports.UpdateProgram = async (req, res) => {
     });
   }  
 };
-exports.DeleteProgram = async(id)=>{
-   return await ProgramService.DeleteProgram(id)
-}  
+
+// ✅ Delete Program
+export const DeleteProgram = async (id) => {
+  return await ProgramService.DeleteProgram(id);
+};
