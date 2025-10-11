@@ -1,14 +1,18 @@
+import bcrypt from "bcrypt";
+import path from "path";
+import { fileURLToPath } from "url";
+import { DataTypes } from "sequelize";
+import sequelize from "../../../src/config/db.js";
+import StudentModel from "../Models/Student.js";
+import User from "../Models/user.js";
 
-const bcrypt = require("bcrypt");
-const path = require('path');
-const base = path.resolve(__dirname, '../../../');
-const sequelize = require(path.join(base, 'src', 'config', 'db.js'));
-const { DataTypes } = require('sequelize');
-const user = require("../Models/user");
-const Student = require('../Models/Student')(sequelize, DataTypes);
+// Resolve __dirname for ES modules
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
+const Student = StudentModel(sequelize, DataTypes);
 
-exports.createStudent = async (studentData) => {
+export const createStudent = async (studentData) => {
   try {
     const newStudent = await Student.create(studentData);
     return newStudent;
@@ -17,7 +21,7 @@ exports.createStudent = async (studentData) => {
   }
 };
 
-exports.getAllStudents = async () => {
+export const getAllStudents = async () => {
   try {
     const students = await Student.findAll();
     return students;
@@ -26,11 +30,11 @@ exports.getAllStudents = async () => {
   }
 };
 
-exports.getStudentById = async (id) => {
+export const getStudentById = async (id) => {
   try {
     const student = await Student.findByPk(id);
     if (!student) {
-      const error = new Error('Student not found');
+      const error = new Error("Student not found");
       error.status = 404;
       throw error;
     }
@@ -40,11 +44,11 @@ exports.getStudentById = async (id) => {
   }
 };
 
-exports.updateStudent = async (id, updatedData) => {
+export const updateStudent = async (id, updatedData) => {
   try {
     const student = await Student.findByPk(id);
     if (!student) {
-      const error = new Error('Student not found');
+      const error = new Error("Student not found");
       error.status = 404;
       throw error;
     }
@@ -56,40 +60,39 @@ exports.updateStudent = async (id, updatedData) => {
   }
 };
 
-exports.deleteStudent = async (id) => {
+export const deleteStudent = async (id) => {
   try {
     const deleted = await Student.destroy({ where: { student_id: id } });
     if (!deleted) {
-      const error = new Error('Student not found or already deleted');
+      const error = new Error("Student not found or already deleted");
       error.status = 404;
       throw error;
     }
-    return { message: 'Student deleted successfully' };
+    return { message: "Student deleted successfully" };
   } catch (error) {
     throw error;
   }
 };
 
-exports.changePassword = async(email, password, confirmpass) =>{
-  try{
-  
+export const changePassword = async (email, password, confirmpass) => {
+  try {
     if (password !== confirmpass) {
-      throw new Error('Passwords do not match');
+      throw new Error("Passwords do not match");
     }
+
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    // Update user by email
-    const [updatedRows] = await user.update(
+    const [updatedRows] = await User.update(
       { password: hashedPassword },
       { where: { email } }
     );
 
     if (updatedRows === 0) {
-      throw new Error('User not found or password not updated');
+      throw new Error("User not found or password not updated");
     }
 
-    return { message: 'Password updated successfully' };
-  }catch(error){
+    return { message: "Password updated successfully" };
+  } catch (error) {
     throw error;
   }
-}
+};
