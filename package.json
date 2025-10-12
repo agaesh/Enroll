@@ -2,6 +2,7 @@
   "name": "enroll",
   "version": "1.0.0",
   "description": "Student Management System",
+  "type": "module",
   "main": "index.js",
   "scripts": {
     "start": "node ./src/config/index.js",
