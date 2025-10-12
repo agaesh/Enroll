@@ -1,11 +1,12 @@
 // tests/DepartmentService.test.js
 import { describe, it, expect, beforeEach, vi } from 'vitest';
-const path = require('path');
-const base = path.resolve(__dirname, '../');
-const sequelize = require(path.join(base, 'src', 'config', 'db.js'));
-const { DataTypes } = require('sequelize');
-const DepartmentModel = require('../src/api/Models/department')(sequelize, DataTypes)
-const DepartmentService = require('../src/api/Services/DepartmentServices')
+import path from 'path';
+import sequelize from '../src/Config/db.js'
+import { DataTypes } from 'sequelize';
+import DepartmentModelFactory from '../src/api/Models/department.js';
+import * as DepartmentService from '../src/api/Services/DepartmentServices.js';
+
+const DepartmentModel = DepartmentModelFactory(sequelize, DataTypes);
 
 describe('DepartmentService - CreateDepartment', () => {
   const mockDepartmentData = {
@@ -21,16 +22,12 @@ describe('DepartmentService - CreateDepartment', () => {
   });
 
   it('should create a department successfully', async () => {
-    // Mock Sequelize create method
-//  vi.spyOn(DepartmentModel, 'create').mockResolvedValue(null);
-
     const result = await DepartmentService.CreateDeparment(mockDepartmentData);
 
     expect(result).toEqual({
       message: 'Department created successfully',
       department: result.department
     });
-    // expect(DepartmentModel.create).toHaveBeenCalledWith(mockDepartmentData);
   });
 
   it('should throw error if creation fails due to empty department code', async () => {
@@ -38,9 +35,6 @@ describe('DepartmentService - CreateDepartment', () => {
       ...mockDepartmentData,
       department_code: '' // force empty code
     };
-
-    // // Mock create to simulate DB returning null
-    // vi.spyOn(DepartmentModel, 'create').mockResolvedValue(null);
 
     await expect(DepartmentService.CreateDeparment(invalidDepartmentData))
       .rejects
@@ -65,26 +59,24 @@ describe("UpdateDepartment Service", () => {
     ).rejects.toThrow("At-Least One Department fields must be provided to update");
   });
 
-it("should throw error if department not found", async () => {
-  vi.spyOn(DepartmentModel, "findOne").mockResolvedValue(null);
-  await expect(
-    DepartmentService.UpdateDepartment({
-      department_id: 123, // make sure this matches your service
-      department_code:"DDSF",
-      department_name: "Finance",
-    })
-  ).rejects.toThrow("No Deparment found with the given department id");
-});
+  it("should throw error if department not found", async () => {
+    vi.spyOn(DepartmentModel, "findOne").mockResolvedValue(null);
+    await expect(
+      DepartmentService.UpdateDepartment({
+        department_id: 123,
+        department_code:"DDSF",
+        department_name: "Finance",
+      })
+    ).rejects.toThrow("No Deparment found with the given department id");
+  });
 
   it("should update department successfully using real DB record", async () => {
-    // First, get an existing department from the database
-    const existingDepartment = await DepartmentModel.findOne(); // fetch first available record
+    const existingDepartment = await DepartmentModel.findOne();
     if (!existingDepartment) {
       throw new Error("No department found in DB to test update");
     }
 
-    // Update the department name
-    const newName = "Finance_" + Date.now(); // to avoid duplicate names
+    const newName = "Finance_" + Date.now();
     const result = await DepartmentService.UpdateDepartment({
       department_id: existingDepartment.department_id,
       department_name: newName,
@@ -92,13 +84,13 @@ it("should throw error if department not found", async () => {
 
     expect(result).toBe("Department updated successfully");
 
-    // Verify the update in DB
     const updatedDepartment = await DepartmentModel.findOne({
       where: { department_id: existingDepartment.department_id },
     });
     expect(updatedDepartment.department_name).toBe(newName);
   });
 });
+
 describe("Delete-Department", () => {
   it("should throw 'ID Must Be Provided'", async () => {
     await expect(DepartmentService.DeleteDepartment())
@@ -106,8 +98,9 @@ describe("Delete-Department", () => {
       .toThrow("ID must be provided");
   });
 
-  it("should throw 'No department found with the given ID'", async()=>{
+  it("should throw 'No department found with the given ID'", async () => {
     await expect(DepartmentService.DeleteDepartment(1231))
-    .rejects.toThrow("No department found with the given ID");
-  })
+      .rejects
+      .toThrow("No department found with the given ID");
+  });
 });
