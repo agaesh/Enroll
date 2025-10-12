@@ -2,7 +2,6 @@ import DepartmentService from '../Services/DepartmentServices.js';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { DataTypes } from 'sequelize';
-import { UpdateProgram } from './ProgramCourseController.js';
 import sequelize from '../../../src/Config/db.js';
 import defineDepartmentModel from '../Models/department.js';
 
@@ -14,44 +13,42 @@ const __dirname = path.dirname(__filename);
 const DepartmentModel = defineDepartmentModel(sequelize, DataTypes);
 
 // ✅ Get All Departments
-export const getAllDepartments = async (req, res) => {
+const getAllDepartments = async (req, res) => {
   try {
     let { top, page, limit } = req.body;
 
-    // Convert string query params to numbers
     top = parseInt(top);
     page = parseInt(page);
     limit = parseInt(limit);
 
     const queryOptions = {
-      order: [['createdAt', 'DESC']], // latest first
+      order: [['createdAt', 'DESC']],
     };
 
     if (top) {
-      // Return only top X records
       queryOptions.limit = top;
     } else if (page && limit) {
+      const offset = (page - 1) * limit;
       queryOptions.limit = limit;
-      queryOptions.offset = (page - 1) * limit;
+      queryOptions.offset = offset;
     }
 
     const departments = await DepartmentModel.findAll(queryOptions);
 
     res.status(200).json({
       status: 'success',
-      data: departments, // No need for toJson()
+      data: departments,
     });
   } catch (error) {
-    res
-      .status(error.status || 500)
-      .json({ error: error.message || 'Internal Server Error' });
+    res.status(error.status || 500).json({ error: error.message || 'Internal Server Error' });
   }
 };
+
 // ✅ Get Department by ID
-export const getDepartmentByID = async (req, res) => {
+const getDepartmentByID = async (req, res) => {
   try {
     const { id } = req.params;
-    const department = await DepartmentService.getDepartmentByID(id);
+    const department = await DepartmentService.getDepartmentById(id);
 
     if (!department) {
       return res.status(404).json({ message: "Department not found" });
@@ -65,13 +62,13 @@ export const getDepartmentByID = async (req, res) => {
 };
 
 // ✅ Create Department
-export const createDepartment = async (req, res) => {
+const createDepartment = async (req, res) => {
   try {
     const addDepartment = await DepartmentService.CreateDeparment(req.body);
     if (addDepartment) {
       res.status(201).json({
-          message: addDeparment.message,
-          data: addDeparment.data
+        message: addDepartment.message,
+        data: addDepartment.department
       });
     }
   } catch (error) {
@@ -80,20 +77,30 @@ export const createDepartment = async (req, res) => {
 };
 
 // ✅ Update Department
-export const updateDepartment = async (req, res) => {
+const updateDepartment = async (req, res) => {
   try {
-    const update = await DepartmentService.UpdateDepartment(req, res);
-    res.status(201).json({ message: update.message });
+    const update = await DepartmentService.UpdateDepartment(req.body);
+    res.status(201).json({ message: update });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
 };
 
 // ✅ Delete Department
-export const deleteDepartment = async (req, res) => {
+const deleteDepartment = async (req, res) => {
   try {
-    await DepartmentService.DeleteDepartment(req, res);
+    const result = await DepartmentService.DeleteDepartment(req.body.id);
+    res.status(200).json({ message: result });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
+};
+
+// ✅ Single default export
+export default {
+  getAllDepartments,
+  getDepartmentByID,
+  createDepartment,
+  updateDepartment,
+  deleteDepartment
 };

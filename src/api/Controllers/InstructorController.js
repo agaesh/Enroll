@@ -16,17 +16,17 @@ const User = UserModelDefiner(sequelize, DataTypes);
 const Instructor = InstructorModelDefiner(sequelize, DataTypes);
 
 // ✅ Create Instructor
-export const CreateInstructor = async (req, res) => {
+const createInstructor = async (req, res) => {
   try {
-    const {id, ...data} = req.body
+    const { id, ...data } = req.body;
     const findInstructor = await Instructor.findOne({ where: { user_id: id } });
 
     if (findInstructor) {
       return res.status(400).json({ 
-          message: "This user already has an instructor profile" 
+        message: "This user already has an instructor profile" 
       });
     }
-    // Create Instructor
+
     const instructor = await InstructorService.CreateInstructor(req.body);
 
     return res.status(201).json({
@@ -41,8 +41,9 @@ export const CreateInstructor = async (req, res) => {
     });
   }
 };
+
 // ✅ Update Instructor
-export const UpdateInstructor = async (req, res) => {
+const updateInstructor = async (req, res) => {
   try {
     const update = await InstructorService.UpdateInstructor(req.params.id, req.body);
 
@@ -57,8 +58,9 @@ export const UpdateInstructor = async (req, res) => {
     });
   }
 };
+
 // ✅ Delete Instructor
-export const DeleteInstructor = async (req, res) => {
+const deleteInstructor = async (req, res) => {
   try {
     await InstructorService.DeleteInstructor(req.params.id);
 
@@ -72,4 +74,11 @@ export const DeleteInstructor = async (req, res) => {
       error: error.message,
     });
   }
+};
+
+// ✅ Single default export
+export default {
+  createInstructor,
+  updateInstructor,
+  deleteInstructor
 };
