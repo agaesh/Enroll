@@ -3,7 +3,7 @@ import jwt from "jsonwebtoken";
 import path from "path";
 import { fileURLToPath } from "url";
 import { DataTypes } from "sequelize";
-import sequelize from "../../src/config/db.js";
+import sequelize from "../../Config/db.js";
 import UserModel from "../Models/user.js";
 
 // Resolve __dirname for ES module
@@ -13,7 +13,7 @@ const __dirname = path.dirname(__filename);
 const User = UserModel(sequelize, DataTypes);
 
 // ✅ Register User
-export const registerUser = async (body) => {
+const registerUser = async (body) => {
   try {
     const { username, email, password } = body;
 
@@ -42,7 +42,7 @@ export const registerUser = async (body) => {
 };
 
 // ✅ Login User
-export const loginUser = async (body) => {
+const loginUser = async (body) => {
   try {
     const { email, password } = body;
 
@@ -83,4 +83,10 @@ export const loginUser = async (body) => {
   } catch (error) {
     throw error;
   }
+};
+
+// ✅ Single default export
+export default {
+  registerUser,
+  loginUser
 };

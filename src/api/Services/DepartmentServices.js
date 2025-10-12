@@ -1,7 +1,7 @@
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { DataTypes } from 'sequelize';
-import sequelize from '../../src/Config/db.js';
+import sequelize from '../../Config/db.js';
 import DepartmentModelFactory from '../Models/department.js';
 
 // Required to simulate __dirname in ES modules
@@ -12,7 +12,7 @@ const __dirname = path.dirname(__filename);
 const DepartmentModel = DepartmentModelFactory(sequelize, DataTypes);
 
 // 🟩 Get Department By ID
-export const getDepartmentById = async (id) => {
+const getDepartmentById = async (id) => {
   if (!id) {
     throw new Error('Department ID is required');
   }
@@ -22,7 +22,7 @@ export const getDepartmentById = async (id) => {
 };
 
 // 🟩 Create Department
-export const CreateDeparment = async (departmentData) => {
+const createDepartment = async (departmentData) => {
   try {
     const department = await DepartmentModel.create(departmentData);
 
@@ -40,7 +40,7 @@ export const CreateDeparment = async (departmentData) => {
 };
 
 // 🟩 Update Department
-export const UpdateDepartment = async (departmentData) => {
+const updateDepartment = async (departmentData) => {
   try {
     const { department_id, ...updateData } = departmentData;
 
@@ -52,11 +52,11 @@ export const UpdateDepartment = async (departmentData) => {
       throw new Error('At least one department field must be provided to update');
     }
 
-    const findExistingDeparment = await DepartmentModel.findOne({
+    const findExistingDepartment = await DepartmentModel.findOne({
       where: { department_id },
     });
 
-    if (!findExistingDeparment) {
+    if (!findExistingDepartment) {
       throw new Error('No Department found with the given department ID');
     }
 
@@ -75,7 +75,7 @@ export const UpdateDepartment = async (departmentData) => {
 };
 
 // 🟩 Delete Department
-export const DeleteDepartment = async (id) => {
+const deleteDepartment = async (id) => {
   try {
     if (id === undefined) {
       throw new Error('ID must be provided');
@@ -93,4 +93,12 @@ export const DeleteDepartment = async (id) => {
   } catch (error) {
     throw error;
   }
+};
+
+// ✅ Single default export
+export default {
+  getDepartmentById,
+  createDepartment,
+  updateDepartment,
+  deleteDepartment
 };

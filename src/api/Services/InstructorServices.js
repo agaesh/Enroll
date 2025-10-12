@@ -14,7 +14,7 @@ const Instructor = InstructorModelFactory(sequelize, DataTypes);
 const ProgramCourse = ProgramCourseModelFactory(sequelize, DataTypes);
 
 // 🟩 Create Instructor
-export const CreateInstructor = async (InstructorData) => {
+const createInstructor = async (InstructorData) => {
   try {
     const instructor = await Instructor.create(InstructorData);
 
@@ -29,7 +29,7 @@ export const CreateInstructor = async (InstructorData) => {
 };
 
 // 🟩 Update Instructor
-export const UpdateInstructor = async (id, InstructorData) => {
+const updateInstructor = async (id, InstructorData) => {
   try {
     const instructor = await Instructor.findByPk(id);
 
@@ -56,7 +56,7 @@ export const UpdateInstructor = async (id, InstructorData) => {
 };
 
 // 🟩 Delete Instructor
-export const DeleteInstructor = async (id) => {
+const deleteInstructor = async (id) => {
   try {
     // Check assigned courses
     const courseCount = await ProgramCourse.count({
@@ -87,4 +87,11 @@ export const DeleteInstructor = async (id) => {
   } catch (error) {
     throw error;
   }
+};
+
+// ✅ Export all functions as a single default object
+export default {
+  createInstructor,
+  updateInstructor,
+  deleteInstructor
 };

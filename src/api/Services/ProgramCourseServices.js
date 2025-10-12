@@ -1,7 +1,7 @@
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { DataTypes } from 'sequelize';
-import sequelize from '../../src/config/db.js';
+import sequelize from '../../Config/db.js';
 import ProgramCourseModelFactory from '../Models/programcourse.js';
 
 // 🔧 Setup __dirname for ES modules
@@ -12,9 +12,8 @@ const __dirname = path.dirname(__filename);
 const ProgramCourse = ProgramCourseModelFactory(sequelize, DataTypes);
 
 // 🟩 Create Program
-export const createProgram = async (programData) => {
+const createProgram = async (programData) => {
   try {
-    // Check if program with same code already exists
     const existingProgram = await ProgramCourse.findOne({
       where: { code: programData.code },
     });
@@ -25,7 +24,6 @@ export const createProgram = async (programData) => {
       throw error;
     }
 
-    // Create new program
     const newProgram = await ProgramCourse.create({
       parent_id: null,
       type: 'PROGRAM',
@@ -46,7 +44,7 @@ export const createProgram = async (programData) => {
 };
 
 // 🟩 Delete Program
-export const DeleteProgram = async (id) => {
+const deleteProgram = async (id) => {
   try {
     const findProgram = await ProgramCourse.findOne({ where: { id } });
 
@@ -64,7 +62,7 @@ export const DeleteProgram = async (id) => {
 };
 
 // 🟩 Update Program
-export const UpdateProgram = async (programData) => {
+const updateProgram = async (programData) => {
   try {
     const { id, ...updateFields } = programData;
 
@@ -84,4 +82,11 @@ export const UpdateProgram = async (programData) => {
   } catch (error) {
     return { success: false, message: error.message };
   }
+};
+
+// ✅ Single default export
+export default {
+  createProgram,
+  updateProgram,
+  deleteProgram
 };
