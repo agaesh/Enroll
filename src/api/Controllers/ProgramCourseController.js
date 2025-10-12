@@ -2,7 +2,7 @@ import ProgramService from "../Services/ProgramCourseServices.js";
 import path from "path";
 import { fileURLToPath } from "url";
 import { DataTypes } from "sequelize";
-import sequelize from "../../../src/config/db.js";
+import sequelize from "../../../src/Config/db.js";
 import defineProgramCourse from "../Models/programcourse.js";
 
 const ProgramCourse = defineProgramCourse(sequelize, DataTypes);

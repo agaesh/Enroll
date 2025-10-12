@@ -1,7 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 import Sequelize, { DataTypes } from 'sequelize';
-import configFile from '../../config/config.js';
+import configFile from '../../Config/config.js';
 
 // __dirname replacement for ES modules
 const __dirname = path.dirname(new URL(import.meta.url).pathname);

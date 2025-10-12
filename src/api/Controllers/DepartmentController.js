@@ -3,7 +3,7 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import { DataTypes } from 'sequelize';
 import { UpdateProgram } from './ProgramCourseController.js';
-import sequelize from '../../../src/config/db.js';
+import sequelize from '../../../src/Config/db.js';
 import defineDepartmentModel from '../Models/department.js';
 
 // Fix __dirname in ES modules
