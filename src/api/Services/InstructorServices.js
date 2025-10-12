@@ -1,7 +1,7 @@
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { DataTypes } from 'sequelize';
-import sequelize from '../../../src/config/db.js';
+import sequelize from '../../Config/db.js';
 import InstructorModelFactory from '../Models/instructor.js';
 import ProgramCourseModelFactory from '../Models/programcourse.js';
 

@@ -6,7 +6,7 @@ import { Sequelize } from 'sequelize';
 
 // Import the default export (the configuration object) from the config file.
 // Note: The original CJS referred to './config', but we use the actual file name.
-import configModule from '../config/config.js'; 
+import configModule from '../Config/config.js'; 
 
 // Destructure the specific 'development' environment configuration.
 const config = configModule.development;

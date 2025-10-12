@@ -1,7 +1,7 @@
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { DataTypes } from 'sequelize';
-import sequelize from '../../../src/config/db.js';
+import sequelize from '../../src/config/db.js';
 import ProgramCourseModelFactory from '../Models/programcourse.js';
 
 // 🔧 Setup __dirname for ES modules

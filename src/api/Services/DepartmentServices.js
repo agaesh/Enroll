@@ -1,7 +1,7 @@
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { DataTypes } from 'sequelize';
-import sequelize from '../../../src/config/db.js';
+import sequelize from '../../src/Config/db.js';
 import DepartmentModelFactory from '../Models/department.js';
 
 // Required to simulate __dirname in ES modules

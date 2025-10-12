@@ -3,7 +3,7 @@ import jwt from "jsonwebtoken";
 import path from "path";
 import { fileURLToPath } from "url";
 import { DataTypes } from "sequelize";
-import sequelize from "../../../src/config/db.js";
+import sequelize from "../../src/config/db.js";
 import UserModel from "../Models/user.js";
 
 // Resolve __dirname for ES module

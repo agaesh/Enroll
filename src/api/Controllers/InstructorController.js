@@ -2,7 +2,7 @@ import InstructorService from "../Services/InstructorServices.js";
 import path from "path";
 import { fileURLToPath } from "url";
 import { DataTypes } from "sequelize";
-import sequelize from "../../config/db.js";
+import sequelize from "../../Config/db.js";
 import UserModelDefiner from "../Models/user.js";
 import InstructorModelDefiner from "../Models/instructor.js";
 import { verifyWebToken } from "../../Middlewares/authMiddleware.js";
