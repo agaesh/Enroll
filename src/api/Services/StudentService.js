@@ -2,7 +2,7 @@ import bcrypt from "bcrypt";
 import path from "path";
 import { fileURLToPath } from "url";
 import { DataTypes } from "sequelize";
-import sequelize from "../../../src/config/db.js";
+import sequelize from "../../../src/Config/db.js";
 import StudentModel from "../Models/Student.js";
 import User from "../Models/user.js";
 
