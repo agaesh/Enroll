@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node ./src/config/index.js",
     "dev": "nodemon ./src/config/index.js",
-    "test": "vitest",
+    "test": "NODE_ENV=test vitest",
     "test:run": "vitest run"
   },
   "author": "",
