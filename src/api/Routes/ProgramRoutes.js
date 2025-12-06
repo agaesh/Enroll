@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
-const programController = require('../Controllers/ProgramCourseController')
+const path = require('path');
+const programController = require(path.join(global.__srcdir, 'api', 'Controllers', 'ProgramCourseController.js'))
 const { Sequelize, DataTypes } = require('sequelize');
 
 // GET /api/programs

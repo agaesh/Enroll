@@ -1,8 +1,9 @@
 const express = require('express');
 const router = express.Router();
-const InstructorController = require('../Controllers/InstructorController')
-const validationId  = require('../Validators/RequiredID');
-const validationBody = require('../Validators/RequiredBody')
+const path =  require('node:path');
+const InstructorController = require(path.join(global.__srcdir, 'api', 'Controllers', 'InstructorController.js'))
+const validationId  = require(path.join(global.__srcdir, 'api', 'Validators', 'RequiredID.js'))
+const validationBody = require(path.join(global.__srcdir, 'api', 'Validators', 'RequiredBody.js'))
 // GET /api/programs
 router.get('/home', (req, res) => {
   res.status(200).send("Welcome To Instructor API");

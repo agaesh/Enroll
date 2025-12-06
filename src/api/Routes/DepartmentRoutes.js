@@ -1,7 +1,8 @@
 const express = require('express');
 const router = express.Router();
-const DeparmentController = require('../Controllers/DepartmentController')
-const { Sequelize, DataTypes } = require('sequelize');
+const path = require('path')
+const DeparmentController = require(path.join(__srcdir, 'api', 'Controllers', 'DepartmentController.js'))
+// const { Sequelize, DataTypes } = require('sequelize');
 
 router.get('/', (req, res)=>{
     res.status(200).send("Welcome To Deparment API");

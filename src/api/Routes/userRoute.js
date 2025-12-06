@@ -1,6 +1,7 @@
 const express = require('express');
+const path = require('path');
 const router = express.Router();
-const userController = require('../Controllers/userController');
+const userController = require(path.join(global.__srcdir, 'api','Controllers', 'userController.js'));
 const { json } = require('sequelize');
 
 // POST /api/users/register
