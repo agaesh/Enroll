@@ -3,8 +3,7 @@ const path = require('path');
 const Sequelize = require('sequelize');
 const basename = path.basename(__filename);
 
-// Adjust the config path to point to src/config/config.json
-const configPath = path.resolve(__dirname, '../../config/config.js');
+const configPath = path.join(global.__srcdir, 'config', 'config.js');
 const config = require(configPath)['development'];
 
 const db = {};
@@ -32,6 +31,5 @@ Object.keys(db).forEach(modelName => {
 });
 
 db.sequelize = sequelize;
-// db.Sequelize = Sequelize;
 
 module.exports = db;
