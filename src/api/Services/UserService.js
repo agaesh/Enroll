@@ -1,10 +1,5 @@
-const bcrypt = require("bcrypt");
 const path = require('path');
-const base = path.resolve(__dirname, '../../../');
-const sequelize = require(path.join(base, 'src', 'config', 'db.js'));
-const { DataTypes } = require('sequelize');
-const jwt = require('jsonwebtoken');
-const User = require('../Models/user')(sequelize, DataTypes);
+const { User } = require(path.join(global.__srcdir, 'api', 'Models'));
 
 exports.registerUser = async (body) => {
   try {
@@ -40,16 +35,17 @@ exports.LoginUser = async(body)=>{
     where: { email }
     });
 
+    if (!findUser) {
+      const error = new Error('Invalid credentials');
+      error.status = 401;
+      throw error;
+    }
+
     const validatePassword = await bcrypt.compare(password, findUser.password)
 
-    if(!findUser){
-      const error = new Error('Email does not exist');
-      error.status = 401;
-      throw error
-    }
     if(!validatePassword){
-      const error = new Error('User Account does not exist. Please Register your account' ) 
-      error.status = 400;
+      const error = new Error('Invalid credentials' ) 
+      error.status = 401;
       throw error
     }
 
@@ -60,11 +56,10 @@ exports.LoginUser = async(body)=>{
      // Return both token and user data (excluding password)
     return {
       token,
-      findUser
+      user: findUser.toJSON()
     };
    
   }catch(error){
     throw error;
   }
 }
-

@@ -1,11 +1,5 @@
-const { error } = require('console');
 const path = require('path');
-const base = path.resolve(__dirname, '../../../');
-const sequelize = require(path.join(base, 'src', 'config', 'db.js'));
-const { DataTypes } = require('sequelize');
-const Instructor = require('../Models/instructor')(sequelize, DataTypes)
-const ProgramCourse = require("../Models/programcourse")(sequelize, DataTypes)
-
+const { Instructor, ProgramCourse } = require(path.join(global.__srcdir, 'api', 'Models'));
 
 exports.CreateInstructor= async(InstructorData)=>{
   try{
@@ -38,7 +32,7 @@ exports.UpdateInstructor = async (id,InstructorData) => {
     return {
         success: true,
         message: "Instructor  updated successfully",
-        data: updateFields.toJSON()
+        data: update.toJSON()
       }; 
     }
   } catch (error) {
@@ -46,7 +40,7 @@ exports.UpdateInstructor = async (id,InstructorData) => {
   }
 };
 
-exports.DeleteInstructor = async(InstructorData)=>{
+exports.DeleteInstructor = async(id)=>{
     try{
 
         // Check courses
@@ -57,13 +51,13 @@ exports.DeleteInstructor = async(InstructorData)=>{
         }
 
         // Check programs
-        const programs = await Instructor.findByPk(id, { include: Program });
+        // const programs = await Instructor.findByPk(id, { include: Program });
 
-        if (programs.Programs && programs.Programs.length > 0) {
-            throw new Error("Cannot delete instructor: assigned to programs");
-        }
+        // if (programs.Programs && programs.Programs.length > 0) {
+        //     throw new Error("Cannot delete instructor: assigned to programs");
+        // }
 
-        const deleteInstructor = await Instructor.destroy(InstructorData)
+        const deleteInstructor = await Instructor.destroy({where: {id: id}})
 
         return{
             success:true,

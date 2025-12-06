@@ -1,8 +1,6 @@
 const path = require('path');
-const base = path.resolve(__dirname, '../../../');
-const sequelize = require(path.join(base, 'src', 'config', 'db.js'));
-const { DataTypes } = require('sequelize');
-const ProgramCourse = require('../Models/programcourse')(sequelize, DataTypes)
+const { ProgramCourse } = require(path.join(global.__srcdir, 'api', 'Models'));
+
 exports.createProgram = async (programData) => {
   try {
     // Check if program with same code already exists

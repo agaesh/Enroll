@@ -1,12 +1,6 @@
-
-const bcrypt = require("bcrypt");
 const path = require('path');
-const base = path.resolve(__dirname, '../../../');
-const sequelize = require(path.join(base, 'src', 'config', 'db.js'));
-const { DataTypes } = require('sequelize');
-const user = require("../Models/user");
-const Student = require('../Models/Student')(sequelize, DataTypes);
-
+const { Student, User } = require(path.join(global.__srcdir, 'api', 'Models'));
+const bcrypt = require('bcrypt');
 
 exports.createStudent = async (studentData) => {
   try {
@@ -79,7 +73,7 @@ exports.changePassword = async(email, password, confirmpass) =>{
     const hashedPassword = await bcrypt.hash(password, 10);
 
     // Update user by email
-    const [updatedRows] = await user.update(
+    const [updatedRows] = await User.update(
       { password: hashedPassword },
       { where: { email } }
     );
