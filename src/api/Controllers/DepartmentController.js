@@ -1,11 +1,6 @@
-const DepartmentService = require('../Services/DepartmentServices');
 const path = require('path');
-const base = path.resolve(__dirname, '../../../');
-const sequelize = require(path.join(base, 'src', 'config', 'db.js'));
-const { DataTypes } = require('sequelize');
-const { UpdateProgram } = require('./ProgramCourseController');
-const { error } = require('console');
-const DepartmentModel = require('../Models/department')(sequelize, DataTypes)
+const DepartmentService = require(path.join(global.__srcdir, 'api', 'Services', 'DepartmentServices'));
+const { Department } = require(path.join(global.__srcdir, 'api', 'Models'));
 
 exports.getAllDeparments = async(req, res)=>{
     try{
@@ -32,7 +27,7 @@ exports.getAllDeparments = async(req, res)=>{
       queryOptions.offset = offset;
     }
 
-    DepartmentModel.findAll(queryOptions)
+    Department.findAll(queryOptions)
     .then((departments) => {
         res.status(200).json({
         status: 'success',
@@ -98,4 +93,3 @@ exports.DeleteDepartment = async(req, res)=>{
     res.status(500).json({ message: error.message });
   }
 }
-

@@ -1,12 +1,7 @@
-const InstructorService = require('../Services/InstructorServices');
 const path = require('path');
-const base = path.resolve(__dirname, '../../../');
-const sequelize = require(path.join(base, 'src', 'config', 'db.js'));
-const { DataTypes } = require('sequelize');
-const { error } = require('console');
-const User = require("../Models/User")(sequelize, DataTypes)
-const InstructorModel = require('../Models/instructor')(sequelize, DataTypes)
-const { verifyWebToken } = require("../../Middlewares/authMiddleware");
+const InstructorService = require(path.join(global.__srcdir, 'api', 'Services', 'InstructorServices'));
+const { verifyWebToken } = require(path.join(global.__srcdir, 'Middlewares', 'authMiddleware'));
+const { Instructor } = require(path.join(global.__srcdir, 'api', 'Models'));
 
 exports.CreateInstructor = async (req, res) => {
   try {

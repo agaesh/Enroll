@@ -1,4 +1,5 @@
-const userService = require('../Services/UserService');
+const path = require('path');
+const userService = require(path.join(global.__srcdir, 'api', 'Services', 'UserService'));
 
 exports.registerUser = async (req, res) => {
   try {

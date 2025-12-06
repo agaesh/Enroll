@@ -1,9 +1,6 @@
-const ProgramService = require("../Services/ProgramCourseServices")
 const path = require('path');
-const base = path.resolve(__dirname, '../../../');
-const sequelize = require(path.join(base, 'src', 'config', 'db.js'));
-const { DataTypes } = require('sequelize');
-const ProgramCourse = require('../Models/programcourse')(sequelize, DataTypes)
+const ProgramService = require(path.join(global.__srcdir, 'api', 'Services', 'ProgramCourseServices'));
+const { ProgramCourse } = require(path.join(global.__srcdir, 'api', 'Models'));
 
 exports.createProgram = async (req, res) => {
   try {
