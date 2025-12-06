@@ -14,7 +14,7 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
       Instructor.belongsTo(models.Department, {
       foreignKey: 'department_id',
-      as: 'department'
+      as: 'department_fk'
       });
     }
   }
