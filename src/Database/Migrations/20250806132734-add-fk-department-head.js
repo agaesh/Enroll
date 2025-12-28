@@ -1,7 +1,7 @@
 'use strict';
 
 /** @type {import('sequelize-cli').Migration} */
-module.exports = {
+export default{
   async up (queryInterface, Sequelize) {
     /**
      * Add altering commands here.
@@ -29,6 +29,6 @@ module.exports = {
      * Example:
      * await queryInterface.dropTable('users');
      */
-     await queryInterface.removeConstraint('Instructors', 'fk_head_department_id');
+     await queryInterface.removeConstraint('Departments', 'fk_head_department_id');
   }
 };

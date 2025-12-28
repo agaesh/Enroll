@@ -1,6 +1,6 @@
 'use strict';
-
-module.exports = {
+/** @type {import('sequelize-cli').Migration} */
+export default {
   async up(queryInterface, Sequelize) {
     // Fetch all instructors
     const [instructors] = await queryInterface.sequelize.query(

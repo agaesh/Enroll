@@ -1,7 +1,6 @@
 'use strict';
-const department = require("../../api/Models/department");
-
-module.exports = {
+/** @type {import('sequelize-cli').Migration} */
+export default{
   async up(queryInterface, Sequelize) {
     await queryInterface.bulkInsert('Departments', [
       {
