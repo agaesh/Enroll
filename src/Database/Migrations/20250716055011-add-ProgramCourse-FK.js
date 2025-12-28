@@ -2,7 +2,7 @@
 
 'use strict';
 /** @type {import('sequelize-cli').Migration} */
-module.exports = {
+export default{
   async up(queryInterface, Sequelize) {
     await queryInterface.addConstraint('programcourses', {
       fields: ['parent_id'],

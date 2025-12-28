@@ -1,7 +1,7 @@
 'use strict';
 
 /** @type {import('sequelize-cli').Migration} */
-module.exports = {
+export default{
   async up (queryInterface, Sequelize) {
     /**
      * Add altering commands here.
@@ -77,7 +77,7 @@ module.exports = {
      * await queryInterface.dropTable('users');
      */
 
-   await queryInterface.removeConstraint('Semester', 'uq_program_semester');
+  //  await queryInterface.removeConstraint('Semester', 'uq_program_semester');
    await queryInterface.dropTable('Semester')
   }
 };

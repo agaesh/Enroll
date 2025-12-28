@@ -1,4 +1,4 @@
-const { body, validationResult } = require('express-validator');
+import { body, validationResult } from 'express-validator';
 
 const requiredBody = [
   body().custom((value, { req }) => {
@@ -8,4 +8,5 @@ const requiredBody = [
     return true;
   })
 ];
-module.exports = requiredBody
+
+export default requiredBody;

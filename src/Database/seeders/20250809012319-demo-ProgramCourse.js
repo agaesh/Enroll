@@ -1,6 +1,6 @@
 'use strict';
-
-module.exports = {
+/** @type {import('sequelize-cli').Migration} */
+export default{
   async up(queryInterface, Sequelize) {
     // 1. Find the Computer Science department
     const [csDept] = await queryInterface.sequelize.query(

@@ -1,54 +1,56 @@
-'use strict';
-const { Model } = require('sequelize');
+import { Model, DataTypes } from 'sequelize';
 
-module.exports = (sequelize, DataTypes) => {
+export default (sequelize) => {
   class Department extends Model {
     static associate(models) {
-      // 2. One department optionally has one department head (an instructor)
+      // One department optionally has one department head (an instructor)
       Department.belongsTo(models.Instructor, {
         foreignKey: 'head_id',
-        as: 'head' // This lets you do department.getHead()
+        as: 'head', // Allows department.getHead()
       });
     }
   }
 
-  Department.init({
-    department_id: {
-      type: DataTypes.INTEGER,
-      primaryKey: true,
-      autoIncrement: true
+  Department.init(
+    {
+      department_id: {
+        type: DataTypes.INTEGER,
+        primaryKey: true,
+        autoIncrement: true,
+      },
+      department_name: {
+        type: DataTypes.STRING(100),
+        allowNull: false,
+      },
+      department_code: {
+        type: DataTypes.STRING(20),
+        allowNull: false,
+        unique: true,
+      },
+      head_id: {
+        type: DataTypes.INTEGER,
+        allowNull: true,
+      },
+      email: {
+        type: DataTypes.STRING(150),
+        allowNull: true,
+      },
+      phone_number: {
+        type: DataTypes.STRING(20),
+        allowNull: true,
+      },
+      building: {
+        type: DataTypes.STRING(100),
+        allowNull: true,
+      },
     },
-    department_name: {
-      type: DataTypes.STRING(100),
-      allowNull: false
-    },
-    department_code: {
-      type: DataTypes.STRING(20),
-      allowNull: false,
-      unique: true
-    },
-    head_id: {
-      type: DataTypes.INTEGER,
-      allowNull: true
-    },
-    email: {
-      type: DataTypes.STRING(150),
-      allowNull: true
-    },
-    phone_number: {
-      type: DataTypes.STRING(20),
-      allowNull: true
-    },
-    building: {
-      type: DataTypes.STRING(100),
-      allowNull: true
-    },
-  }, {
-    sequelize,
-    modelName: 'Department',
-    tableName: 'Departments',
-    timestamps: false  // uses created_at and updated_at
-  });
+    {
+      sequelize,
+      modelName: 'Department',
+      tableName: 'Departments',
+      timestamps: true,
+    }
+  );
 
   return Department;
 };

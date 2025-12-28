@@ -1,86 +1,104 @@
-const path = require('path');
-const base = path.resolve(__dirname, '../../../');
-const sequelize = require(path.join(base, 'src', 'config', 'db.js'));
-const { DataTypes } = require('sequelize');
-const { error } = require('console');
-const { DeleteDepartment } = require('../Controllers/DepartmentController');
-const DepartmentModel= require('../Models/department')(sequelize, DataTypes);
+import path from 'path';
+import { fileURLToPath } from 'url';
+import { DataTypes } from 'sequelize';
+import sequelize from '../../Config/db.js';
+import DepartmentModelFactory from '../Models/department.js';
 
-exports.getDepartmentById = async (id) => {
+// Required to simulate __dirname in ES modules
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+// Initialize model
+const DepartmentModel = DepartmentModelFactory(sequelize, DataTypes);
+
+// 🟩 Get Department By ID
+const getDepartmentById = async (id) => {
   if (!id) {
-    throw new Error("Department ID is required");
+    throw new Error('Department ID is required');
   }
 
   const department = await DepartmentModel.findByPk(id);
   return department; // null if not found
 };
-exports.CreateDeparment = async (departmentData) => {
+
+// 🟩 Create Department
+const createDepartment = async (departmentData) => {
   try {
     const department = await DepartmentModel.create(departmentData);
 
     if (!department) {
-      throw new Error("Department creation failed");
+      throw new Error('Department creation failed');
     }
 
     return {
-      message: "Department created successfully",
-      department: department.toJSON()
+      message: 'Department created successfully',
+      department: department.toJSON(),
     };
   } catch (error) {
     throw error;
   }
 };
-exports.UpdateDepartment = async (departmentData) => {
-  try{
+
+// 🟩 Update Department
+const updateDepartment = async (departmentData) => {
+  try {
     const { department_id, ...updateData } = departmentData;
 
     if (department_id === undefined) {
-      throw new Error("ID must be provided");
+      throw new Error('ID must be provided');
     }
 
     if (Object.keys(updateData).length === 0) {
-       throw new Error("At-Least One Department fields must be provided to update");
+      throw new Error('At least one department field must be provided to update');
     }
 
-    const findExistingDeparment = await DepartmentModel.findOne({
-      where: { department_id}
+    const findExistingDepartment = await DepartmentModel.findOne({
+      where: { department_id },
     });
 
-    if(!findExistingDeparment){
-       throw new Error("No Deparment found with the given department id")
+    if (!findExistingDepartment) {
+      throw new Error('No Department found with the given department ID');
     }
 
     const [updatedRows] = await DepartmentModel.update(updateData, {
-      where: {department_id}
+      where: { department_id },
     });
 
     if (updatedRows > 0) {
-      return "Department updated successfully";
+      return 'Department updated successfully';
     } else {
-      throw new Error("No Department found with the given ID")
-    }
-  }catch(error){
-    throw error
-  }
-};
-
-exports.DeleteDepartment = async (id) => {
-  try {
-    if (id === undefined) {
-      throw new Error("ID must be provided");
-    }
-
-    const deletedRows = await DepartmentModel.destroy({
-     where: { department_id: id }
-    });
-
-    if (deletedRows > 0) {
-      return "Department deleted successfully";
-    } else {
-      throw new Error("No department found with the given ID")
+      throw new Error('No Department found with the given ID');
     }
   } catch (error) {
     throw error;
   }
 };
 
+// 🟩 Delete Department
+const deleteDepartment = async (id) => {
+  try {
+    if (id === undefined) {
+      throw new Error('ID must be provided');
+    }
+
+    const deletedRows = await DepartmentModel.destroy({
+      where: { department_id: id },
+    });
+
+    if (deletedRows > 0) {
+      return 'Department deleted successfully';
+    } else {
+      throw new Error('No department found with the given ID');
+    }
+  } catch (error) {
+    throw error;
+  }
+};
+
+// ✅ Single default export
+export default {
+  getDepartmentById,
+  createDepartment,
+  updateDepartment,
+  deleteDepartment
+};
