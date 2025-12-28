@@ -48,7 +48,7 @@ export default (sequelize) => {
       sequelize,
       modelName: 'Department',
       tableName: 'Departments',
-      timestamps: false,
+      timestamps: true,
     }
   );
 
