@@ -26,7 +26,7 @@ export default (sequelize) => {
     {
       parent_id: DataTypes.INTEGER,
       type: {
-        type: DataTypes.ENUM('PROGRAM', 'COURSE'),
+        type: DataTypes.ENUM('PROGRAM', 'COURSE', 'EXAM'),
         allowNull: false,
         defaultValue: null,
       },
@@ -45,6 +45,37 @@ export default (sequelize) => {
         allowNull: false,
         defaultValue: '',
       },
+      activity_type: {
+      type: DataTypes.ENUM(
+        // Exam types
+        'MIDTERM', 'FINAL', 'QUIZ', 'PRACTICAL', 'ORAL',
+        // Lab types
+        'PROJECT', 'WORKSHOP', 'PRACTICAL_LAB'
+      ),
+      allowNull: true,
+      },
+    // Exam && LAB specific fields
+      start_date: {
+        type: DataTypes.DATETIME,
+        allowNull: true,
+      },
+      end_date: {
+        type: DataTypes.DATETIME,
+        allowNull: true,
+      },
+      total_marks: {
+        type: DataTypes.INTEGER,
+        allowNull: true,
+      },
+      location: {
+        type: DataTypes.ENUM('HALL', 'LAB', 'ONLINE'),
+        allowNull: true,
+      },
+      remarks: {
+        type: DataTypes.TEXT,
+        allowNull: true,
+        length: 500
+      }
     },
     {
       sequelize,
