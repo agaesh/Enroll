@@ -14,30 +14,32 @@ const ProgramCourse = ProgramCourseModelFactory(sequelize, DataTypes);
 // 🟩 Create Program
 const createProgram = async (programData) => {
   try {
-    const existingProgram = await ProgramCourse.findOne({
-      where: { code: programData.code },
-    });
+    // const existingProgram = await ProgramCourse.findOne({
+    //   where: { code: programData.code },
+    // });
 
-    if (existingProgram) {
-      const error = new Error('Program code already exists');
-      error.status = 400;
-      throw error;
-    }
+    // if (existingProgram) {
+    //   const error = new Error('Program code already exists');
+    //   error.status = 400;
+    //   throw error;
+    // }
+  
+    // const newProgram = await ProgramCourse.create({
+    //   parent_id: null,
+    //   type: 'PROGRAM',
+    //   code: programData.code,
+    //   name: programData.name,
+    //   department_id: programData.department_id,
+    //   credit_hours: programData.credit_hours || null,
+    //   semester: programData.semester || null,
+    //   level: programData.level,
+    //   is_active: programData.is_active ?? true,
+    //   mode: programData.mode || 'FULLTIME',
+    // });
 
-    const newProgram = await ProgramCourse.create({
-      parent_id: null,
-      type: 'PROGRAM',
-      code: programData.code,
-      name: programData.name,
-      department_id: programData.department_id,
-      credit_hours: programData.credit_hours || null,
-      semester: programData.semester || null,
-      level: programData.level,
-      is_active: programData.is_active ?? true,
-      mode: programData.mode || 'FULLTIME',
-    });
+    const createProgram = await ProgramCourse.create(programData);
 
-    return newProgram;
+    return createProgram;
   } catch (error) {
     throw error;
   }
@@ -64,7 +66,7 @@ const deleteProgram = async (id) => {
 // 🟩 Update Program
 const updateProgram = async (programData) => {
   try {
-    
+
     const { id, ...updateFields } = programData;
 
     if (!id) {
@@ -83,7 +85,7 @@ const updateProgram = async (programData) => {
 
 const SearchProgram = async (top,page,limit,search) => {
     try {
-    
+
       const queryOptions = {
         where: { type: "PROGRAM" },
         // order: [["createdAt", "DESC"]],
