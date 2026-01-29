@@ -12,12 +12,12 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const createProgram = async (req, res) => {
   try {
     const addProgram = await ProgramService.createProgram(req.body);
-    if (addProgram) {
+    // if(addProgram){
       res.status(201).json({
         message: 'Program Added Successfully',
         id: addProgram.id
       });
-    }
+    // }
   } catch (error) {
     res.status(error.status || 500).json({ error: error.message || 'Internal Server Error' });
   }
