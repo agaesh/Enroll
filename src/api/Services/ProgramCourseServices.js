@@ -64,29 +64,73 @@ const deleteProgram = async (id) => {
 // 🟩 Update Program
 const updateProgram = async (programData) => {
   try {
+    
     const { id, ...updateFields } = programData;
 
     if (!id) {
       throw new Error('Program ID is required to update');
     }
 
-    const [rowsUpdated] = await ProgramCourse.update(updateFields, {
+    const update = await ProgramCourse.update(updateFields, {
       where: { id },
     });
 
-    if (rowsUpdated === 0) {
-      return { success: false, message: 'No program found with the given ID' };
-    }
-
-    return { success: true, message: 'Program updated successfully' };
+    return {message: 'Program updated successfully'};
   } catch (error) {
-    return { success: false, message: error.message };
+    throw error;
   }
 };
+
+const SearchProgram = async (top,page,limit,search) => {
+    try {
+    
+      const queryOptions = {
+        where: { type: "PROGRAM" },
+        // order: [["createdAt", "DESC"]],
+      };
+
+      // Pagination
+      if (top) {
+        queryOptions.limit = parseInt(top, 10);
+      } else if (page && limit) {
+        page = parseInt(page, 10);
+        limit = parseInt(limit, 10);
+        queryOptions.limit = limit;
+        queryOptions.offset = (page - 1) * limit; // ✅ fixed parseDecimal
+      }
+
+      // Wildcard search
+      if (search) {
+        queryOptions.where = {
+          ...queryOptions.where,
+          [Op.or]: [
+            { name: { [Op.like]: `%${search}%` } },
+            { code: { [Op.like]: `%${search}%` } }
+            // add more fields if needed
+          ]
+        };
+      }
+
+      const programs = await ProgramCourse.findAll(queryOptions);
+
+     return {
+      programs,
+      pagination: {
+      page: page || null,
+      limit: queryOptions.limit || null,
+      total: programs.length
+    }
+};
+    } catch (error) {
+      throw error;
+    }
+  }
+
 
 // ✅ Single default export
 export default {
   createProgram,
   updateProgram,
-  deleteProgram
+  deleteProgram,
+  SearchProgram
 };
