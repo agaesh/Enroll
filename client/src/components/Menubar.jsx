@@ -8,12 +8,10 @@ const Menubar = () => {
     <nav className="menubar">
       <h2>Enroll<span>Now</span></h2>
       <ul>
-        <li><Link to="/">Home</Link></li>
-        <li><Link to="/students">Courses</Link></li>
-        <li><Link to="/courses">Admissions</Link></li>
+        <li><Link to="/Course">Home</Link></li>
+        <li><Link to= "/">E-Learning</Link></li>
+        <li><Link to="/admission">Admissions</Link></li>
         <li><Link to="/enroll">About Us</Link></li>
-        <li><Link to="/logout">Login</Link></li>
-        <li><Link to="/register">Register</Link></li>
       </ul>
     </nav>
   );
