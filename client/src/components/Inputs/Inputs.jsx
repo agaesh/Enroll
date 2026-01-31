@@ -2,7 +2,7 @@
 import React from 'react';
 import styles from './inputs.module.css';
 
-const Input = ({ label, placeholder, type = "text", value, onChange, name }) => {
+const Input = ({ label, placeholder, type = "text", value, onChange, name, TextBoxStyles, maxLength }) => {
   return (
     <div className={styles.inputGroup}>
       {label && <label className={styles.label}>{label}</label>}
@@ -13,6 +13,8 @@ const Input = ({ label, placeholder, type = "text", value, onChange, name }) => 
         value={value}
         onChange={onChange}
         name={name}
+        style={TextBoxStyles}
+        maxLength={maxLength} // restricts input length
       /> 
     </div>
   );
