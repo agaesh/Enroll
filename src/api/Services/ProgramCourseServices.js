@@ -1,6 +1,6 @@
 import path from 'path';
 import { fileURLToPath } from 'url';
-import { DataTypes } from 'sequelize';
+import { DataTypes, Op } from 'sequelize';
 import sequelize from '../../Config/db.js';
 import ProgramCourseModelFactory from '../Models/programcourse.js';
 
@@ -98,8 +98,8 @@ const SearchProgram = async (top,page,limit,search) => {
         page = parseInt(page, 10);
         limit = parseInt(limit, 10);
         queryOptions.limit = limit;
-        queryOptions.offset = (page - 1) * limit; // ✅ fixed parseDecimal
-      }
+          queryOptions.offset = (page - 1) * limit; // ✅ fixed parseDecimal
+        }
 
       // Wildcard search
       if (search) {
@@ -113,15 +113,15 @@ const SearchProgram = async (top,page,limit,search) => {
         };
       }
 
-      const programs = await ProgramCourse.findAll(queryOptions);
+        const programs = await ProgramCourse.findAll(queryOptions);
 
-     return {
-      programs,
-      pagination: {
-      page: page || null,
-      limit: queryOptions.limit || null,
-      total: programs.length
-    }
+        return {
+        programs,
+        pagination: {
+        page: page || null,
+        limit: queryOptions.limit || null,
+        total: programs.length
+        }
 };
     } catch (error) {
       throw error;
