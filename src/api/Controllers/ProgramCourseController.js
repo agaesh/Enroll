@@ -30,7 +30,6 @@ const getAllPrograms = async (req, res) => {
     let response = await ProgramService.SearchProgram(top, page,limit, search)
 
     return res.status(200).json({
-      code:res.statusCode,
       response
     })
      
@@ -45,8 +44,6 @@ const updateProgram = async (req, res) => {
     const { message } = await ProgramService.updateProgram(req.body);
 
     res.status(200).json({
-      code:200,
-      data: data,
       message
     });
   } catch (err) {
@@ -60,7 +57,6 @@ const deleteProgram = async (req, res) => {
     const { message } = await ProgramService.deleteProgram(req.params.id);
 
     return res.status(200).json({
-      code: 200,
       message
     });
   } catch (error) {
