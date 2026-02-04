@@ -86,20 +86,15 @@ const updateProgram = async (programData) => {
 const SearchProgram = async (top,page,limit,search) => {
     try {
 
-      const queryOptions = {
-        where: { type: "PROGRAM" },
-        // order: [["createdAt", "DESC"]],
-      };
+        page = parseInt(page, 10) || 1;
+        limit = parseInt(limit, 10) || 10;
 
-      // Pagination
-      if (top) {
-        queryOptions.limit = parseInt(top, 10);
-      } else if (page && limit) {
-        page = parseInt(page, 10);
-        limit = parseInt(limit, 10);
-        queryOptions.limit = limit;
-          queryOptions.offset = (page - 1) * limit; // ✅ fixed parseDecimal
-        }
+        const queryOptions = {
+            where: { type: "PROGRAM" },
+            limit,
+            offset: (page - 1) * limit, // pagination
+            order: [["createdAt", "DESC"]], // optional ordering
+        };
 
       // Wildcard search
       if (search) {
@@ -120,7 +115,6 @@ const SearchProgram = async (top,page,limit,search) => {
         pagination: {
         page: page || null,
         limit: queryOptions.limit || null,
-        total: programs.length
         }
 };
     } catch (error) {

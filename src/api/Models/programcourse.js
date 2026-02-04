@@ -49,7 +49,7 @@ export default (sequelize) => {
     {
       sequelize,
       modelName: 'ProgramCourse',
-      timestamps: false,
+      timestamps: true,
     }
   );
 
