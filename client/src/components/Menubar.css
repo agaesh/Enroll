@@ -27,13 +27,8 @@ h2 span {
 }
 
 .menubar ul {
-  list-style: none;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0;
-  margin: 0;
-  padding: 0;
-  width:fit-content;
+  display:none;
+ list-style: none;
 }
 
 /* .menubar li {
@@ -65,15 +60,17 @@ h2 span {
     flex-direction: column;
   }
 
-  .menubar ul li {
-    height: 30px;
-    padding-left: 0px;
-    padding-right: 15px;
-    border-left: 1px solid white;
-    border-right: none;
-    margin-left: 0;
-    text-align: center;
-    text-anchor: start;
+    .menubar ul li {
+        height: 30px;
+        padding-left: 0px;
+        padding-right: 15px;
+        border-left: 1px solid white;
+        border-right: none;
+        margin-left: 0;
+        text-align: center;
+        text-anchor: start;
+ 
+    }
   }
 
   .menubar ul li a {
@@ -83,14 +80,21 @@ h2 span {
 }
 
 /* Laptops and medium screens (e.g., 1024px - 1440px) */
-@media screen and (min-width: 769px) and (max-width: 1440px) {
+@media screen and (min-width: 769px) {
   .menubar {
     padding: 15px 40px;
   }
-
+  
   .menubar li {
     padding-right: 40px;
     margin-left: 30px;
+
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0;
+    margin: 0;
+    padding: 0;
+    width:fit-content;
   }
 
   .menubar li a {
@@ -99,5 +103,6 @@ h2 span {
 
   nav h2 {
     font-size: 22px;
+    background-color:red;
   }
 }

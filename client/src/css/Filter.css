@@ -1,0 +1,110 @@
+/* Base input styling - no border, no outline */
+.filter {
+    padding: 8px 10px;
+    border: none; /* removed border */
+    border-radius: 8px; /* no rounding needed */
+    outline: none; /* removes focus outline */
+    width: 100%;
+    font-size: 14px;
+    background: transparent; /* transparent background for modern look */
+    transition: none; /* remove any focus transition */
+}
+
+input::placeholder {
+    font-size: 14px;
+    color: #999;
+}
+
+/* Dropdown wrapper */
+.dropdown {
+    position: relative;
+    width: 220px;
+    font-family: 'Inter', sans-serif;
+}
+
+/* Input container */
+.dropdown-input {
+    position: relative;
+    border: 1px solid black; /* keeps visible dropdown border */
+    border-radius:10px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    padding: 1px 1px 1px 1px; /* smaller, compact padding */
+    background: #fff; /* container background */ /* slight rounding for modern look */
+    font-size: 14px; /* tex t fits nicely */
+    margin:6px;
+}
+ 
+.dropdown-input:hover {
+    border:2px solid blue;
+}
+
+
+/* Chevron positioning */
+.chevron {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    transition: transform 0.3s ease;
+}
+
+/* Dropdown menu */
+.dropdown-menu {
+    display: none; /* hidden by default */
+    position: absolute;
+    top: 110%; /* slight gap below input */
+    left: 0;
+    right: 0;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background: #fff;
+    list-style: none;
+    margin: 0;
+    padding: 6px 0;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    z-index: 100;
+    transition: opacity 0.2s ease, transform 0.2s ease;
+    opacity: 0;
+    transform: translateY(-5px);
+}
+
+/* Show menu on focus */
+.dropdown:focus-within .dropdown-menu {
+    display: block;
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Rotate chevron when open */
+.dropdown:focus-within .chevron svg {
+    transform: rotate(180deg);
+}
+
+/* Dropdown items */
+.dropdown-menu li {
+    display: flex;
+    align-items: center; /* centers checkbox + text vertically */
+    gap: 10px; /* space between checkbox and text */
+    padding: 10px 12px;
+    cursor: pointer;
+    font-size: 14px;
+    color: #333;
+    transition: background 0.2s ease, color 0.2s ease;
+}
+
+.dropdown-menu li:hover {
+    background: #f3f4f6; /* subtle modern hover color */
+    color: #111;
+    border-radius: 6px;
+}
+
+/* Checkbox style modernized */
+.dropdown-menu input[type="checkbox"] {
+    width: 16px;
+    height: 16px;
+    accent-color: #4f46e5; /* modern blue check */
+    cursor: pointer;
+    flex-shrink: 0;
+}

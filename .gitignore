@@ -3,4 +3,7 @@ package-lock.json
 node_modules/.package-lock.json
 node_modules/accepts/HISTORY.md
 .env
+/.vs/Enroll.slnx/FileContentIndex
+/.vs/Enroll.slnx/v18
+/.vs/Enroll.slnx/config
 /.vs
